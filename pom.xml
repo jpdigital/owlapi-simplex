@@ -16,7 +16,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>OWL API Generator</name>
+    <name>OWLAPI Simplex</name>
     <url>http://www.example.org</url> <!-- Change to entwicker-news.net when oneline-->
 
     <organization>
@@ -33,6 +33,7 @@
     <modules>
         <module>owlapi-simplex-core</module>
         <module>owlapi-simplex-cli</module>
+        <module>owlapi-simplex-utils</module>
     </modules>
     
     <reporting>
