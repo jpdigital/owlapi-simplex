@@ -16,9 +16,6 @@
  */
 package de.jpdigital.owl.apigenerator.core;
 
-import org.apache.commons.text.WordUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.semanticweb.owlapi.model.HasIRI;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.parameters.Imports;

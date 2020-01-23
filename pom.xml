@@ -44,21 +44,43 @@
         <url>http://www.jp-digital.de</url>
     </organization>
 
-
     <licenses>
         <license>
             <name>AGPLv3 or newer</name>
             <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
         </license>
     </licenses>
+    
+    <scm>
+        <connection>scm:https://github.com/jpdigital/owlapi-simplex</connection>
+        <developerConnection>scm:git:https://github.com/jpdigital/owlapi-simplex</developerConnection>
+        <url>https://github.com/jpdigital/owlapi-simplex</url>
+        <tag>HEAD</tag>
+    </scm>
+    
+     <distributionManagement>
+        <site>
+            <id>owlapi-simplex-site</id>
+            <name>Maven DDL generator plugin for Hibernate 5</name>
+            <url>http://jpdigital.github.io/owlapi-simplex/</url>
+        </site>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
 
     <modules>
         <module>owlapi-simplex-core</module>
         <module>owlapi-simplex-cli</module>
         <module>owlapi-simplex-utils</module>
         <module>owlapi-simplex-maven-plugin</module>
-    <module>owlapi-simplex-maven-plugin-test</module>
-  </modules>
+        <module>owlapi-simplex-maven-plugin-test</module>
+    </modules>
     
     <reporting>
         <excludeDefaults>true</excludeDefaults>
@@ -84,9 +106,9 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <!--<version>2.4</version>-->
-                <configuration>
+                <!--                <configuration>
                     <rulesUri>file:///${session.executionRootDirectory}/maven-version-rules.xml</rulesUri>
-                </configuration>
+                </configuration>-->
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -287,9 +309,9 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <configuration>
+                <!--                <configuration>
                     <rulesUri>file:///${session.executionRootDirectory}/maven-version-rules.xml</rulesUri>
-                </configuration>
+                </configuration>-->
             </plugin>
             
             <plugin>
@@ -358,7 +380,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.12</version>        
+                <version>4.12</version>
             </dependency>
 
             <!-- PICO CLI is used for parsing command line arguments -->
@@ -408,7 +430,7 @@
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
-                <version>3.0.3</version>
+                <version>3.1.10</version>
             </dependency>
             
         </dependencies>

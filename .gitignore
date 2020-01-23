@@ -44,3 +44,4 @@ nb-configuration.xml
 /owlapi-simplex-utils/target/
 /owlapi-simplex-maven-plugin/target/
 /owlapi-simplex-maven-plugin-test/target/
+/target/
