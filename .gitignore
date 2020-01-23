@@ -30,6 +30,15 @@ test.sh
 
 nb-configuration.xml
 
+# Visual Studio Code files
+
+.project
+.settings
+.classpath
+.factorypath
+
+# Target dirs
+
 /owlapi-simplex-core/target/
 /owlapi-simplex-cli/target/
 /owlapi-simplex-utils/target/
