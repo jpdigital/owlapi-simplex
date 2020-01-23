@@ -26,6 +26,10 @@ hs_err_pid*
 # Only for local testing
 test.sh
 
+# Netbeans config
+
+nb-configuration.xml
+
 /owlapi-simplex-core/target/
 /owlapi-simplex-cli/target/
 /owlapi-simplex-utils/target/
