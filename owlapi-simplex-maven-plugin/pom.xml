@@ -7,38 +7,22 @@
     <parent>
         <groupId>de.jpdigital</groupId>
         <artifactId>owlapi-simplex</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
     
     <groupId>de.jpdigital</groupId>
     <artifactId>owlapi-simplex-maven-plugin</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     
     <name>Maven plugin for OWLAPI Simplex</name>
-    
     <url>http://maven.apache.org</url>
     
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
-    <prerequisites>
-        <maven>3.0.4</maven>
-    </prerequisites>
-
-    <inceptionYear>2020</inceptionYear>
-
-    <licenses>
-        <license>
-            <name>AGPLv3 or newer</name>
-            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
-        </license>
-    </licenses>
-
     <description>
         A Maven plugin for generating an user friendly API for OWL Ontologies.
     </description>
+    
+    <inceptionYear>2020</inceptionYear>
     
     <developers>
         <developer>
@@ -57,6 +41,22 @@
         <name>Jens Pelzetter</name>
         <url>http://www.jp-digital.de</url>
     </organization>
+    
+    <licenses>
+        <license>
+            <name>AGPLv3 or newer</name>
+            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+        </license>
+    </licenses>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
+
 
     
     <dependencies>
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>de.jpdigital</groupId>
             <artifactId>owlapi-simplex-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
         
         <dependency>

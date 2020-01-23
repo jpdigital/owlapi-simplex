@@ -13,20 +13,42 @@
 
     <groupId>de.jpdigital</groupId>
     <artifactId>owlapi-simplex</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>OWLAPI Simplex</name>
     <url>http://www.example.org</url> <!-- Change to entwicker-news.net when oneline-->
+    
+    <description>
+        A code generator and some utility classes to make the OWL API simpler to 
+        use.
+    </description>
+    
+    <inceptionYear>2020</inceptionYear>
 
+    <developers>
+        <developer>
+            <id>jensp</id>
+            <name>Jens Pelzetter</name>
+            <email>jens@jp-digital.de</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>Europe/Berlin</timezone>
+            <url>http://www.jp-digital.de</url>
+        </developer>
+    </developers>
+   
     <organization>
         <name>Jens Pelzetter</name>
+        <url>http://www.jp-digital.de</url>
     </organization>
+
 
     <licenses>
         <license>
-            <name>LGPLv2 or newer</name>
-            <url>http://www.gnu.org/licenses/lgpl-2.0.html</url>
+            <name>AGPLv3 or newer</name>
+            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
         </license>
     </licenses>
 

@@ -6,15 +6,47 @@
     <parent>
         <groupId>de.jpdigital</groupId>
         <artifactId>owlapi-simplex</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>de.jpdigital</groupId>
     <artifactId>owlapi-simplex-utils</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>OWLAPI Simplex Utils</name>
     <url>http://maven.apache.org</url>
+    
+    <description>
+        Utils for owlapi-simplex. Can also be used without using the 
+        owlapi-simplex code generator.
+    </description>
+    
+    <inceptionYear>2020</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>jensp</id>
+            <name>Jens Pelzetter</name>
+            <email>jens@jp-digital.de</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>Europe/Berlin</timezone>
+            <url>http://www.jp-digital.de</url>
+        </developer>
+    </developers>
+   
+    <organization>
+        <name>Jens Pelzetter</name>
+        <url>http://www.jp-digital.de</url>
+    </organization>
+    
+    <licenses>
+        <license>
+            <name>AGPLv3 or newer</name>
+            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+        </license>
+    </licenses>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
