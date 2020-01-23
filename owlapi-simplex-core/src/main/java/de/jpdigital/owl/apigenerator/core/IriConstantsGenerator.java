@@ -84,7 +84,7 @@ public class IriConstantsGenerator {
                 .getOntology()
                 .classesInSignature(Imports.INCLUDED)
                 .map(owlClass -> (HasIRI) owlClass), 
-            OwlEntityType.INDIVIDUAL
+            OwlEntityType.CLASS
         );
         
 //        final Set<IRI> iriSet = ontologyOwlApi

@@ -26,3 +26,8 @@ hs_err_pid*
 # Only for local testing
 test.sh
 
+/owlapi-simplex-core/target/
+/owlapi-simplex-cli/target/
+/owlapi-simplex-utils/target/
+/owlapi-simplex-maven-plugin/target/
+/owlapi-simplex-maven-plugin-test/target/

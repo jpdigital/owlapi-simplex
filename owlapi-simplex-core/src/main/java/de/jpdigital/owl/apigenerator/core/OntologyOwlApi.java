@@ -80,12 +80,14 @@ public class OntologyOwlApi {
         );
         for (final Path path : ontologyFiles) {
             LOGGER.info(
-                "Trying to load ontology from path %s...", path.toString()
+                "Trying to load ontology from path {}...", 
+                path.toAbsolutePath().toString()
             );
             if (!Files.exists(path)) {
                 throw new OntologyLoadingException(
                     String.format(
-                        "Ontology file %s does not exist.", path.toString()
+                        "Ontology file %s does not exist.", 
+                        path.toAbsolutePath().toString()
                     )
                 );
             }
@@ -93,7 +95,8 @@ public class OntologyOwlApi {
             if (!Files.isReadable(path)) {
                 throw new OntologyLoadingException(
                     String.format(
-                        "Ontology file %s is not readable.", path.toString()
+                        "Ontology file %s is not readable.", 
+                        path.toAbsolutePath().toString()
                     )
                 );
             }
@@ -111,7 +114,8 @@ public class OntologyOwlApi {
                     Objects.requireNonNull(
                         inputStream,
                         String.format(
-                            "Failed to load ontology file %s.", file.toString()
+                            "Failed to load ontology file %s.", 
+                            file.toAbsolutePath().toString()
                         )
                     )
                 );

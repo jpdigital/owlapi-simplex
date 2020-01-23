@@ -34,7 +34,9 @@
         <module>owlapi-simplex-core</module>
         <module>owlapi-simplex-cli</module>
         <module>owlapi-simplex-utils</module>
-    </modules>
+        <module>owlapi-simplex-maven-plugin</module>
+    <module>owlapi-simplex-maven-plugin-test</module>
+  </modules>
     
     <reporting>
         <excludeDefaults>true</excludeDefaults>
@@ -305,7 +307,6 @@
                 <artifactId>log4j-slf4j-impl</artifactId>
                 <version>2.13.0</version>
             </dependency>
-
             
             <!-- Dependencies for OWL -->
             <dependency>
@@ -343,6 +344,38 @@
                 <groupId>info.picocli</groupId>
                 <artifactId>picocli</artifactId>
                 <version>4.1.4</version>
+            </dependency>
+            
+            <!-- Dependencies for Maven plugins -->
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-artifact</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>3.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-testing</groupId>
+                <artifactId>maven-plugin-testing-harness</artifactId>
+                <version>3.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-utils</artifactId>
+                <version>3.3.0</version>
             </dependency>
             
             <!--
