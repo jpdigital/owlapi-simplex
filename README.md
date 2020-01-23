@@ -1,6 +1,6 @@
 # owlapi-simplex
 
-The [OWL API](http://owlcs.github.io/owlapi/) the de facto standard way for
+The [OWL API](http://owlcs.github.io/owlapi/) is the de facto standard way for
 working with OWL ontologies. If used in software projects using the OWL API
 often requires a lot a boiler plate code. This project provides
 
