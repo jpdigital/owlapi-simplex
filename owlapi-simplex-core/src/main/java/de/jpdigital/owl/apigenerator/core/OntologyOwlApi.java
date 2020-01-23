@@ -44,6 +44,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * This class provides several methods for working with OWL ontologies required
+ * by the code generators.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
@@ -53,12 +55,28 @@ public class OntologyOwlApi {
         OntologyOwlApi.class
     );
 
+    /**
+     * The ontology
+     */
     private final OWLOntology ontology;
 
+    /**
+     * The {@link OWLOntologyManager} used to access the ontology.
+     */
     private final OWLOntologyManager ontologyManager;
 
+    /**
+     * A reasoner for the ontology.
+     */
     private final OWLReasoner reasoner;
 
+    /**
+     * Creates a new {@code OntologyOwlApi} instance.
+     *
+     * @param ontology        The ontology to use.
+     * @param ontologyManager The ontology manager for accessing the ontology.
+     * @param reasoner        A reasoner for the ontology.
+     */
     public OntologyOwlApi(final OWLOntology ontology,
                           final OWLOntologyManager ontologyManager,
                           final OWLReasoner reasoner) {
@@ -67,6 +85,17 @@ public class OntologyOwlApi {
         this.reasoner = reasoner;
     }
 
+    /**
+     * Load the provided ontologies.
+     *
+     * @param ontologyFiles The OWL files to load. The files must be in the
+     *                      correct order so that imports in the OWL files can
+     *                      be resolved.
+     *
+     * @return A new {@link OntologyOwlApi} instance.
+     *
+     * @throws OntologyLoadingException
+     */
     public static OntologyOwlApi loadOntologies(final String[] ontologyFiles)
         throws OntologyLoadingException {
 
@@ -79,6 +108,17 @@ public class OntologyOwlApi {
         return loadOntologies(ontologyFilePaths);
     }
 
+    /**
+     *Load the provided ontologies.
+     *
+     * @param ontologyFiles The OWL files to load. The files must be in the
+     *                      correct order so that imports in the OWL files can
+     *                      be resolved.
+     *
+     * @return A new {@link OntologyOwlApi} instance.
+     *
+     * @throws OntologyLoadingException
+     */
     public static OntologyOwlApi loadOntologies(
         final List<Path> ontologyFiles
     ) throws OntologyLoadingException {
@@ -91,13 +131,13 @@ public class OntologyOwlApi {
         );
         for (final Path path : ontologyFiles) {
             LOGGER.info(
-                "Trying to load ontology from path {}...", 
+                "Trying to load ontology from path {}...",
                 path.toAbsolutePath().toString()
             );
             if (!Files.exists(path)) {
                 throw new OntologyLoadingException(
                     String.format(
-                        "Ontology file %s does not exist.", 
+                        "Ontology file %s does not exist.",
                         path.toAbsolutePath().toString()
                     )
                 );
@@ -106,7 +146,7 @@ public class OntologyOwlApi {
             if (!Files.isReadable(path)) {
                 throw new OntologyLoadingException(
                     String.format(
-                        "Ontology file %s is not readable.", 
+                        "Ontology file %s is not readable.",
                         path.toAbsolutePath().toString()
                     )
                 );
@@ -125,7 +165,7 @@ public class OntologyOwlApi {
                     Objects.requireNonNull(
                         inputStream,
                         String.format(
-                            "Failed to load ontology file %s.", 
+                            "Failed to load ontology file %s.",
                             file.toAbsolutePath().toString()
                         )
                     )
@@ -157,6 +197,10 @@ public class OntologyOwlApi {
         return reasoner;
     }
 
+    /**
+     * Get all classes from the ontology.
+     * @return A list of the OWL classes.
+     */
     public List<OWLClass> getAllClasses() {
 
         return ontology
@@ -164,24 +208,44 @@ public class OntologyOwlApi {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Get all object properties from the ontology
+     * 
+     * @return A list of all object properties.
+     */
     public List<OWLObjectProperty> getAllObjectProperties() {
         return ontology
             .objectPropertiesInSignature(Imports.INCLUDED)
             .collect(Collectors.toList());
     }
 
+    /**
+     * Get all data properties from the ontology
+     * 
+     * @return A list of all data properties.
+     */
     public List<OWLDataProperty> getAllDataProperties() {
         return ontology
             .dataPropertiesInSignature(Imports.INCLUDED)
             .collect(Collectors.toList());
     }
 
+    /**
+     * Get all individuals from the ontology
+     * 
+     * @return A list of all individuals.
+     */
     public List<OWLNamedIndividual> getAllIndividuals() {
         return ontology
             .individualsInSignature(Imports.INCLUDED)
             .collect(Collectors.toList());
     }
 
+    /**
+     * Get all annotation properties from the ontology
+     * 
+     * @return A list of all anootation properties.
+     */
     public List<OWLAnnotationProperty> getAllAnnotationProperties() {
         return ontology
             .annotationPropertiesInSignature(Imports.INCLUDED)

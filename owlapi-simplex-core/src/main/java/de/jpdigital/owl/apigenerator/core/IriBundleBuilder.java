@@ -31,7 +31,8 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
- *
+ * Builder for {@link IriBundle}s.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 class IriBundleBuilder {
@@ -40,14 +41,34 @@ class IriBundleBuilder {
         IriBundleBuilder.class
     );
 
+    /**
+     * The IRI from which the bundle is build.
+     */
     private final IRI iri;
+    /**
+     * The OWL entity type of the entity identified by the {@code IRI}.
+     */
     private final OwlEntityType owlEntityType;
 
+    /**
+     * Creates a new {@code IRIBundleBuilder} for the provided IRI and the 
+     * provided entity type.
+     * 
+     * @param iri The IRI to use.
+     * @param owlEntityType The OWL entity type of the entity identified by the 
+     * {@code IRI}.
+     */
     IriBundleBuilder(final IRI iri, final OwlEntityType owlEntityType) {
         this.iri = iri;
         this.owlEntityType = owlEntityType;
     }
     
+    /**
+     * Creates the {@link IriBundle}.
+     * 
+     * @return 
+     * @throws IriConstantsGenerationFailedExpection If an error occurs.
+     */
     IriBundle build() throws IriConstantsGenerationFailedExpection {
         
         final String namespace = iri.getNamespace();
@@ -60,6 +81,12 @@ class IriBundleBuilder {
         return new IriBundle(namespace, packageName, packagePath, className);
     }
     
+    /**
+     * Helper method for generating a valid Java package name from the namespace
+     * IRI. 
+     * 
+     * @return A valid package name for the namespace IRI.
+     */
     private String generatePackageName() {
         LOGGER.warn("Generating package name from IRI {}...", iri.toString());
         
@@ -93,7 +120,6 @@ class IriBundleBuilder {
             .map(token -> WordUtils.uncapitalize(token))
             .map(token -> token.replace("-", ""))
             .map(token -> avoidNumericBegin(token))
-//            .map(token -> token.toLowerCase(Locale.ROOT))
             .collect(Collectors.joining("."));
         LOGGER.warn(
             "Generated package name '{}' from IRI '{}'.", 
@@ -103,10 +129,23 @@ class IriBundleBuilder {
         return packageName;
     }
     
+    /**
+     * REturns the path for the package.
+     * 
+     * @param packageName The name of the package.
+     * @return The path of the package.
+     */
     private Path generatePackagePath(final String packageName) {
         return Paths.get(packageName.replace('.', '/'));
     }
     
+    /**
+     * Generates the class name for the IRI bundle.
+     * 
+     * @param packageName The package name of the Bundle.
+     * @return The class name of the bundle.
+     * @throws IriConstantsGenerationFailedExpection 
+     */
     private String generateClassName(final String packageName)
         throws IriConstantsGenerationFailedExpection {
         final String suffix;
@@ -144,6 +183,15 @@ class IriBundleBuilder {
             .replace("-", "");
     }
     
+    /**
+     * Helper method for avoiding a numeric first character in package or class 
+     * names.
+     * @param value The value to validate.
+     
+     * @return If the provided value does not start with a number the value is
+     * return unchanged. If it starts with a number a underscore is added as
+     * first character.
+     */
      private String avoidNumericBegin(final String value) {
         if (value.matches("^[0-9].*")) {
             return String.format("_%s",  value);

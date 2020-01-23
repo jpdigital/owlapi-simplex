@@ -24,6 +24,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
+ * A helper class which stores the informations about the IRIs in a specific
+ * namespace. 
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */

@@ -17,7 +17,9 @@
 package de.jpdigital.owl.apigenerator.core;
 
 /**
- *
+ * Expection throw by the {@link IriConstantsGenerator} if the generation
+ * of the IRI constants fails.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class IriConstantsGenerationFailedExpection extends Exception {

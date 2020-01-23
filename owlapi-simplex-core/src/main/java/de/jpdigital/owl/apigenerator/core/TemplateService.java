@@ -26,7 +26,8 @@ import java.io.StringWriter;
 import java.util.Map;
 
 /**
- *
+ * Service class for the Freemarker templates used to generate the code.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class TemplateService {
@@ -45,10 +46,22 @@ public class TemplateService {
         );
     }
 
+    /**
+     * Get the instance of the {@code TemplateService}.
+     * @return The {@code TemplateService} instance.
+     */
     public static final TemplateService getTemplateService() {
         return INSTANCE;
     }
 
+    /**
+     * Process a templats
+     * 
+     * @param templateName The name of the template to use.
+     * @param data The data to add to the templates.
+     * 
+     * @return The processed template.
+     */
     public String processTemplate(
         final String templateName, final Map<String, Object> data
     ) {

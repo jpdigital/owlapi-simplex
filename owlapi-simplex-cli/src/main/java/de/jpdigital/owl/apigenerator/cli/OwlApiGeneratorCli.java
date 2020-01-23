@@ -47,6 +47,9 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
         OwlApiGeneratorCli.class
     );
 
+    /**
+     * Path for storing the generated sources.
+     */
     @Parameters(
         index = "0",
         description = "The output directory. The generated sources will be "
@@ -54,6 +57,9 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
     )
     private Path outputDirPath;
 
+    /**
+     * The paths of the OWL files to load.
+     */
     @Parameters(
         index = "1..*",
         description = "The ontology(ies) for which the API is generated. The "

@@ -40,6 +40,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Mojo invoking the code generators provided by owlapi-simplex-core with the
+ * parameters set in the {@code pom.xml}.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
@@ -53,13 +55,17 @@ public class OwlApiSimplexMojo extends AbstractMojo {
 
     /**
      * The OWL files to use. They must be provided in the correct order so that
-     * imports in the OWL files can be resolved.
+     * imports in the OWL files can be resolved. The path are relative to the
+     * resource directory.
      */
     @Parameter(required = true)
     private String[] owlFiles;
 
     /**
-     * Location of the output directory
+     * Location of the output directory, relative to the project build
+     * directory.
+     *
+     * Default value is {@code ${project.build.directory}/generated-sources}.
      */
     @Parameter(
         defaultValue = "${project.build.directory}/generated-sources",
@@ -68,9 +74,19 @@ public class OwlApiSimplexMojo extends AbstractMojo {
     )
     private File outputDirectory;
 
+    /**
+     * Provides access to the Maven project itself.
+     */
     @Parameter(defaultValue = "${project}", readonly = true)
     private transient MavenProject project;
 
+    /**
+     * Processes the parameters set in the {@code pom.xml} and calls the code
+     * generators.
+     *
+     * @throws MojoExecutionException
+     * @throws MojoFailureException   If an errors occurs.
+     */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         final File outputDir = this.outputDirectory;
@@ -94,10 +110,9 @@ public class OwlApiSimplexMojo extends AbstractMojo {
 
         final List<Resource> resources = build.getResources();
         final List<Path> owlFilePaths = new ArrayList<>();
-        for(final String owlFile : owlFiles) {
+        for (final String owlFile : owlFiles) {
             owlFilePaths.add(findOntologyPath(owlFile, resources));
         }
-
 
         final OntologyOwlApi ontologyOwlApi;
         try {
@@ -123,10 +138,24 @@ public class OwlApiSimplexMojo extends AbstractMojo {
                 "Error while generating IRI constants.", ex
             );
         }
-        
+
         project.addCompileSourceRoot(outputDir.getAbsolutePath());
     }
 
+    /**
+     * Helper method for finding the OWL files in the resource directories. The
+     * method checks all resource directory for the presence of the provided OWL
+     * file. If the file is not found in any of these directories a
+     * {@link MojoFailureException} is thrown.
+     *
+     * @param owlFilePath The path of the OWL to look for.
+     * @param resources   The resource directories of the project.
+     *
+     * @return The absolute path to the OWL file.
+     *
+     * @throws MojoFailureException If the OWL file is not found in one of the
+     *                              resource directories.
+     */
     private Path findOntologyPath(
         final String owlFilePath, final List<Resource> resources
     ) throws MojoFailureException {

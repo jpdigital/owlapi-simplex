@@ -17,7 +17,8 @@
 package de.jpdigital.owl.apigenerator.core;
 
 /**
- *
+ * Thrown if an unexpected error occurs.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class UnexpectedErrorException extends RuntimeException {

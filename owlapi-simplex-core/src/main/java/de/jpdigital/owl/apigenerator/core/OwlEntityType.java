@@ -17,7 +17,8 @@
 package de.jpdigital.owl.apigenerator.core;
 
 /**
- *
+ * Enum for the OWL entity types.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public enum OwlEntityType {

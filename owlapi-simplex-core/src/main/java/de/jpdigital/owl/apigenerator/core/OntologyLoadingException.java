@@ -17,7 +17,8 @@
 package de.jpdigital.owl.apigenerator.core;
 
 /**
- *
+ * Expection thrown if loading an ontoloy fails.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class OntologyLoadingException extends Exception {

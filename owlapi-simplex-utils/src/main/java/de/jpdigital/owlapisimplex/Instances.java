@@ -37,17 +37,34 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * An Utility class for working with OWL individuals.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class Instances {
 
+    /**
+     * The ontology to use.
+     */
     private final OWLOntology ontology;
 
+    /**
+     * The ontology manager for interacting the ontology.
+     */
     private final OWLOntologyManager ontologyManager;
 
+    /**
+     * Reasoner for the ontology.
+     */
     private final OWLReasoner reasoner;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param ontology        The ontology to use.
+     * @param ontologyManager The ontology manager.
+     * @param reasoner        The reasoner.
+     */
     private Instances(
         final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
@@ -58,6 +75,17 @@ public class Instances {
         this.reasoner = reasoner;
     }
 
+    /**
+     * Factory method for generating new intances of {
+     *
+     * @ocde DataProperties}.
+     *
+     * @param ontology        The ontology to use.
+     * @param ontologyManager The ontology manager.
+     * @param reasoner        The reasoner.
+     *
+     * @return A {@code DataProperties} instance.
+     */
     public static Instances buildInstances(
         final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
@@ -105,15 +133,33 @@ public class Instances {
             .entities()
             .sorted(this::sortResults);
     }
-    
+
+    /**
+     * Find all instances matching the provided DL query.
+     * 
+     * @param query The query to execute.
+     * @return All indviduals matching the query.
+     */
     public List<OWLNamedIndividual> getInstances(final String query) {
         return instances(query).collect(Collectors.toList());
     }
-    
+
+    /**
+     * Get all instances with the provided IRI.
+     * 
+     * @param iri The IRI.
+     * @return A stream with all matching individuals.
+     */
     public Stream<OWLNamedIndividual> instances(final IRI iri) {
         return instances(iri.getShortForm());
     }
-    
+
+    /**
+     * Get all instances with the provided IRI.
+     * 
+     * @param iri The IRI.
+     * @return A list with all matching individuals.
+     */
     public List<OWLNamedIndividual> getInstances(final IRI iri) {
         return instances(iri).collect(Collectors.toList());
     }

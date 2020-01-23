@@ -29,17 +29,34 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- *
+ * An Utility class for working with OWL object properties.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class ObjectProperties {
 
+    /**
+     * The ontology to use.
+     */
     private final OWLOntology ontology;
 
+     /**
+     * The ontology manager for interacting the ontology.
+     */
     private final OWLOntologyManager ontologyManager;
 
+    /**
+     * Reasoner for the ontology.
+     */
     private final OWLReasoner reasoner;
 
+    /**
+     * Creates a new instance.
+     * 
+     * @param ontology The ontology to use.
+     * @param ontologyManager The ontology manager.
+     * @param reasoner The reasoner.
+     */
     private ObjectProperties(
         final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
@@ -50,6 +67,15 @@ public class ObjectProperties {
         this.reasoner = reasoner;
     }
 
+    /**
+     * Factory method for generating new instances of {@code ObjectProperties}.
+     * 
+     @param ontology The ontology to use.
+     * @param ontologyManager The ontology manager.
+     * @param reasoner The reasoner.
+     
+     * @return A {@code DataProperties} instance.
+     */
     public static ObjectProperties buildObjectProperties(
         final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
