@@ -122,7 +122,7 @@ public class OntologyOwlApi {
     public static OntologyOwlApi loadOntologies(
         final List<Path> ontologyFiles
     ) throws OntologyLoadingException {
-        LOGGER.error(
+        LOGGER.info(
             "Trying to load ontologies from these paths: {}...",
             ontologyFiles
                 .stream()

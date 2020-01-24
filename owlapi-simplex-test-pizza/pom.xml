@@ -1,25 +1,27 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
     <modelVersion>4.0.0</modelVersion>
-
+    
     <parent>
         <groupId>de.jpdigital</groupId>
         <artifactId>owlapi-simplex</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
-
+    
     <groupId>de.jpdigital</groupId>
-    <artifactId>owlapi-simplex-maven-plugin-test</artifactId>
+    <artifactId>owlapi-simplex-test-pizza</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-
-    <name>owlapi-simplex-maven-plugin-test</name>
+    
+    <name>owlapi-simplex-test-pizza</name>
     <url>https://jpdigital.github.io/owiapi-simplex</url>
     
     <description>
-        A test project for the Maven plugin
+        A test project for owlapi-simplex using the Pizza Ontology used
+        as example in the Protégé documentation.
     </description>
-                
+    
     <inceptionYear>2020</inceptionYear>
     
     <developers>
@@ -50,7 +52,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+    
     <dependencies>
         
         <dependency>
@@ -69,7 +71,7 @@
         </dependency>
         
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
@@ -78,7 +80,7 @@
                 <version>0.1.0-SNAPSHOT</version>
                 <configuration>
                     <owlFiles>
-                        <param>ontologies/programming-languages.owl</param>
+                        <param>pizza.owl</param>
                     </owlFiles>
                 </configuration>
                 <executions>
@@ -92,5 +94,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>

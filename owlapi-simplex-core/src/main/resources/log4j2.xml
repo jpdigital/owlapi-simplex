@@ -6,14 +6,20 @@
         </Console>
     </Appenders>
     <Loggers>
+        <Logger name="de.jpdigital.owl.apigenerator.core.OntologyOwlApi"
+                level="DEBUG">
+        </Logger>
+        <Logger name="de.jpdigital.owl.apigenerator.core.IriBundleBuilder"
+                level="DEBUG">
+        </Logger>
+        <Logger name="de.jpdigital.owl.apigenerator.core.IriConstantsGenerator"
+                level="DEBUG">
+        </Logger>
+        <Logger name="de.jpdigital.owl.apigenerator.core.RepositoryGenerator"
+                level="DEBUG">
+        </Logger>
         <Root level="WARN">
             <AppenderRef ref="Console"/>
         </Root>
-        <Logger name="de.jpdigital.owl.apigenerator.core.OntologyOwlApi"
-                level="debug">
-        </Logger>
-        <Logger name="de.jpdigital.owl.apigenerator.core.IriConstantsGenerator"
-                level="debug">
-        </Logger>
     </Loggers>
 </Configuration>

@@ -5,8 +5,29 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:programminglanguages-example="http://owlapi-simplex.jpdigital.de/programminglanguages-example#">
     <owl:Ontology rdf:about="http://owlapi-simplex.jpdigital.de/programminglanguages-example"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://owlapi-simplex.jpdigital.de/programminglanguages-example#yearOfRelease -->
+
+    <owl:DatatypeProperty rdf:about="http://owlapi-simplex.jpdigital.de/programminglanguages-example#yearOfRelease">
+        <rdfs:domain rdf:resource="http://owlapi-simplex.jpdigital.de/programminglanguages-example#ProgrammingLanguage"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
     
 
 
@@ -91,6 +112,7 @@
     <owl:NamedIndividual rdf:about="http://owlapi-simplex.jpdigital.de/programminglanguages-example#C-Sharp">
         <rdf:type rdf:resource="http://owlapi-simplex.jpdigital.de/programminglanguages-example#FunctionalProgrammingLanguage"/>
         <rdf:type rdf:resource="http://owlapi-simplex.jpdigital.de/programminglanguages-example#ObjectOrientedProgrammingLanguage"/>
+        <programminglanguages-example:yearOfRelease rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2001</programminglanguages-example:yearOfRelease>
     </owl:NamedIndividual>
     
 
@@ -99,6 +121,7 @@
 
     <owl:NamedIndividual rdf:about="http://owlapi-simplex.jpdigital.de/programminglanguages-example#Erlang">
         <rdf:type rdf:resource="http://owlapi-simplex.jpdigital.de/programminglanguages-example#FunctionalProgrammingLanguage"/>
+        <programminglanguages-example:yearOfRelease rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1987</programminglanguages-example:yearOfRelease>
     </owl:NamedIndividual>
     
 
@@ -107,6 +130,7 @@
 
     <owl:NamedIndividual rdf:about="http://owlapi-simplex.jpdigital.de/programminglanguages-example#Haskell">
         <rdf:type rdf:resource="http://owlapi-simplex.jpdigital.de/programminglanguages-example#FunctionalProgrammingLanguage"/>
+        <programminglanguages-example:yearOfRelease rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1990</programminglanguages-example:yearOfRelease>
     </owl:NamedIndividual>
     
 
@@ -115,6 +139,7 @@
 
     <owl:NamedIndividual rdf:about="http://owlapi-simplex.jpdigital.de/programminglanguages-example#Java">
         <rdf:type rdf:resource="http://owlapi-simplex.jpdigital.de/programminglanguages-example#ObjectOrientedProgrammingLanguage"/>
+        <programminglanguages-example:yearOfRelease rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1995</programminglanguages-example:yearOfRelease>
     </owl:NamedIndividual>
     
 
@@ -123,6 +148,7 @@
 
     <owl:NamedIndividual rdf:about="http://owlapi-simplex.jpdigital.de/programminglanguages-example#Prolog">
         <rdf:type rdf:resource="http://owlapi-simplex.jpdigital.de/programminglanguages-example#LogicProgrammingLanguage"/>
+        <programminglanguages-example:yearOfRelease rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1972</programminglanguages-example:yearOfRelease>
     </owl:NamedIndividual>
 </rdf:RDF>
 

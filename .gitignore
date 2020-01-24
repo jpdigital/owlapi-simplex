@@ -45,3 +45,4 @@ nb-configuration.xml
 /owlapi-simplex-maven-plugin/target/
 /owlapi-simplex-maven-plugin-test/target/
 /target/
+/owlapi-simplex-test-pizza/target/

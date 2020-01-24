@@ -22,13 +22,6 @@ import org.apache.logging.log4j.Logger;
 import org.semanticweb.owlapi.model.IRI;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 /**
  * Builder for {@link IriBundle}s.
@@ -72,72 +65,78 @@ class IriBundleBuilder {
     IriBundle build() throws IriConstantsGenerationFailedExpection {
         
         final String namespace = iri.getNamespace();
-        final String packageName = generatePackageName().toLowerCase(
-            Locale.ROOT
+        final String packageName = Utils.generatePackageName(iri);
+        final Path packagePath = Utils.generatePackagePath(packageName);
+        final String className = generateClassName(
+            Utils.generatePackageName(iri, false)
         );
-        final Path packagePath = generatePackagePath(packageName);
-        final String className = generateClassName(generatePackageName());
         
         return new IriBundle(namespace, packageName, packagePath, className);
     }
     
-    /**
-     * Helper method for generating a valid Java package name from the namespace
-     * IRI. 
-     * 
-     * @return A valid package name for the namespace IRI.
-     */
-    private String generatePackageName() {
-        LOGGER.warn("Generating package name from IRI {}...", iri.toString());
-        
-        final String scheme = iri.getScheme();
-        final String namespace;
-        if (scheme == null || scheme.isEmpty()) {
-            namespace = iri.getNamespace();
-        } else {
-            namespace = iri.getNamespace().substring(scheme.length() + 3);
-        }
-        
-        final int domainIndexEnd = namespace.indexOf('/');
-        final String domain = namespace.substring(0, domainIndexEnd);
-        final String path;
-        if (namespace.endsWith("#")) {
-            path = namespace.substring(domainIndexEnd + 1,
-                                       namespace.length() - 1);
-        } else {
-            path = namespace.substring(domainIndexEnd + 1);
-        }
-        
-        final List<String> tokens = new ArrayList<>(
-            Arrays.asList(domain.split("\\."))
-        );
-        Collections.reverse(tokens);
-        tokens.addAll(Arrays.asList(path.split("/")));
-        
-        final String packageName = tokens
-            .stream()
-            .map(token -> WordUtils.capitalize(token, '-'))
-            .map(token -> WordUtils.uncapitalize(token))
-            .map(token -> token.replace("-", ""))
-            .map(token -> avoidNumericBegin(token))
-            .collect(Collectors.joining("."));
-        LOGGER.warn(
-            "Generated package name '{}' from IRI '{}'.", 
-            packageName,
-            iri.toString()
-        );
-        return packageName;
-    }
+//    /**
+//     * Helper method for generating a valid Java package name from the namespace
+//     * IRI. 
+//     * 
+//     * @return A valid package name for the namespace IRI.
+//     */
+//    private String generatePackageName() {
+//        LOGGER.info("Generating package name from IRI {}...", iri.toString());
+//        
+//        final String scheme = iri.getScheme();
+//        final String namespace;
+//        if (scheme == null || scheme.isEmpty()) {
+//            namespace = iri.getNamespace();
+//        } else {
+//            namespace = iri.getNamespace().substring(scheme.length() + 3);
+//        }
+//        
+//        final int domainIndexEnd = namespace.indexOf('/');
+//        final String domain = namespace.substring(0, domainIndexEnd);
+//        final String path;
+//        if (namespace.endsWith("#")) {
+//            path = namespace.substring(domainIndexEnd + 1,
+//                                       namespace.length() - 1);
+//        } else {
+//            path = namespace.substring(domainIndexEnd + 1);
+//        }
+//        
+//        final List<String> tokens = new ArrayList<>(
+//            Arrays.asList(domain.split("\\."))
+//        );
+//        Collections.reverse(tokens);
+//        tokens.addAll(
+//            Arrays
+//                .stream(path.split("/"))
+//                .map(token -> token.replace('.', '-'))
+//                .collect(Collectors.toList())
+//        );
+//        
+//        final String packageName = tokens
+//            .stream()
+//            .map(token -> WordUtils.capitalize(token, '-'))
+//            .map(token -> WordUtils.uncapitalize(token))
+//            .map(token -> token.replace("-", ""))
+//            .map(token -> token.replace('.', '_'))
+//            .map(token -> avoidNumericBegin(token))
+//            .collect(Collectors.joining("."));
+//        LOGGER.info(
+//            "Generated package name '{}' from IRI '{}'.", 
+//            packageName,
+//            iri.toString()
+//        );
+//        return packageName;
+//    }
     
-    /**
-     * REturns the path for the package.
-     * 
-     * @param packageName The name of the package.
-     * @return The path of the package.
-     */
-    private Path generatePackagePath(final String packageName) {
-        return Paths.get(packageName.replace('.', '/'));
-    }
+//    /**
+//     * Returns the path for the package.
+//     * 
+//     * @param packageName The name of the package.
+//     * @return The path of the package.
+//     */
+//    private Path generatePackagePath(final String packageName) {
+//        return Paths.get(packageName.replace('.', '/'));
+//    }
     
     /**
      * Generates the class name for the IRI bundle.
@@ -175,12 +174,13 @@ class IriBundleBuilder {
         }
         
         final int lastDotIndex = packageName.lastIndexOf('.');
-        return WordUtils.capitalize(
+        final String className = WordUtils.capitalize(
             String.format(
                 "%s%s", packageName.substring(lastDotIndex + 1), suffix
             ), 
             '-', '.')
             .replace("-", "");
+        return avoidNumericBegin(className);
     }
     
     /**

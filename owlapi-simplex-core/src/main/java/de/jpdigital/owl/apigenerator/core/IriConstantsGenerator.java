@@ -65,7 +65,7 @@ public class IriConstantsGenerator {
     }
 
     /**
-     * Factory method creating a new {@code IriConstantsGenerator}.
+     * Factory method creating a new {@code IriConstantsGenerator} instance.
      *
      * The provided parameters are checked. If an parameter is invalid an
      * {@link IllegalArgumentException} is thrown.

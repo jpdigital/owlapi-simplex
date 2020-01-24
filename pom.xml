@@ -80,7 +80,8 @@
         <module>owlapi-simplex-utils</module>
         <module>owlapi-simplex-maven-plugin</module>
         <module>owlapi-simplex-maven-plugin-test</module>
-    </modules>
+    <module>owlapi-simplex-test-pizza</module>
+  </modules>
     
     <reporting>
         <excludeDefaults>true</excludeDefaults>
