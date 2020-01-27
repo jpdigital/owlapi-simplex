@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -61,27 +62,38 @@ public class RepositoryGenerator {
      */
     private final Path outputDir;
 
+    /**
+     * Where should the generated Repositories class load the OWL files from?
+     */
+    private final OwlFileSource fileSource;
+
     private RepositoryGenerator(
-        final OntologyOwlApi ontologyOwlApi, final Path outputDir
+        final OntologyOwlApi ontologyOwlApi,
+        final Path outputDir,
+        final OwlFileSource fileSource
     ) {
         this.ontologyOwlApi = ontologyOwlApi;
         this.outputDir = outputDir;
+        this.fileSource = fileSource;
     }
 
     /**
-     * Factory method creating a new {@code IriConstantsGenerator} instance.
+     * Factory method creating a new {@code IriConstantsGenerator} instance.The
+     * provided parameters are checked.
      *
-     * The provided parameters are checked. If an parameter is invalid an
-     * {@link IllegalArgumentException} is thrown.
+     * If an parameter is invalid an {@link IllegalArgumentException} is thrown.
      *
      * @param ontologyOwlApi The ontology to use.
      * @param outputDir      The output directory.
+     * @param fileSource     Where should the generated class the OWL files
+     *                       from?
      *
      * @return An {@code IriConstantsGenerator}.
      */
     public static RepositoryGenerator buildRepositoryGenerator(
         final OntologyOwlApi ontologyOwlApi,
-        final Path outputDir
+        final Path outputDir,
+        final OwlFileSource fileSource
     ) {
         if (!Files.isDirectory(outputDir)) {
             throw new IllegalArgumentException(
@@ -103,17 +115,25 @@ public class RepositoryGenerator {
 
         Objects.requireNonNull(ontologyOwlApi, "ontologyOwlApi can't be null");
 
-        return new RepositoryGenerator(ontologyOwlApi, outputDir);
+        return new RepositoryGenerator(ontologyOwlApi, outputDir, fileSource);
     }
 
     public void generateRepositoryClasses() {
-        ontologyOwlApi
+        final Set<String> repositoryClasses = ontologyOwlApi
             .getOntology()
             .classesInSignature(Imports.INCLUDED)
-            .forEach(this::generateRepositoryClass);
+            .map(this::generateRepositoryClass)
+            .collect(Collectors.toSet());
     }
 
-    private void generateRepositoryClass(final OWLClass owlClass) {
+    /**
+     * Generates a repository class for the provided OWL class.
+     *
+     * @param owlClass The OWL class
+     *
+     * @return The fully qualified name of the generated Java class.
+     */
+    private String generateRepositoryClass(final OWLClass owlClass) {
         LOGGER.info(
             "OWL class {} is in the domain of the following data properties:",
             owlClass.getIRI().toString()
@@ -137,7 +157,7 @@ public class RepositoryGenerator {
 
         final String packageName = Utils.generatePackageName(owlClass.getIRI());
         final String className = owlClass.getIRI().getShortForm();
-        
+
         final Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("license", "");
         dataModel.put("package", packageName);
@@ -158,14 +178,15 @@ public class RepositoryGenerator {
         final Path classFile = packageDir.resolve(
             String.format("%s.java", className)
         );
-        
+
         try {
             Files.createDirectories(packageDir);
             Files.write(classFile, result.getBytes(StandardCharsets.UTF_8));
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             throw new UnexpectedErrorException(ex);
         }
-        
+
+        return String.format("%s.%s", packageName, className);
     }
 
 //    private String dataPropertyRangeTypes(final OWLDataProperty dataProperty) {
