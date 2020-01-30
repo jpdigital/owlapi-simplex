@@ -182,8 +182,8 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
         if (generateOntologyLoader) {
             final OntologyLoaderGenerator ontologyLoaderGenerator
                                               = OntologyLoaderGenerator
-                    .buildOntologyLoaderGenerator(
-                        ontologyOwlApi, outputDirPath, OwlFileSource.DIRECTORY
+                    .buildDirectoryOntologyLoaderGenerator(
+                        ontologyOwlApi, outputDirPath
                     );
             try {
                 ontologyLoaderGenerator.generateOntologyLoader();

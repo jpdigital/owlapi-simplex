@@ -18,6 +18,8 @@ package de.jpdigital.owlapisimplex.maven;
 
 import de.jpdigital.owl.apigenerator.core.IriConstantsGenerationFailedExpection;
 import de.jpdigital.owl.apigenerator.core.IriConstantsGenerator;
+import de.jpdigital.owl.apigenerator.core.OntologyLoaderGenerationFailedException;
+import de.jpdigital.owl.apigenerator.core.OntologyLoaderGenerator;
 import de.jpdigital.owl.apigenerator.core.OntologyLoadingException;
 import de.jpdigital.owl.apigenerator.core.OntologyOwlApi;
 import de.jpdigital.owl.apigenerator.core.RepositoryGenerationFailedException;
@@ -40,6 +42,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Mojo invoking the code generators provided by owlapi-simplex-core with the
@@ -140,14 +143,30 @@ public class OwlApiSimplexMojo extends AbstractMojo {
                 "Error while generating IRI constants: ", ex
             );
         }
-        
+
         final RepositoryGenerator repositoryGenerator = RepositoryGenerator
             .buildRepositoryGenerator(ontologyOwlApi, outputDir.toPath());
         try {
             repositoryGenerator.generateRepositoryClasses();
-        } catch(RepositoryGenerationFailedException ex) {
+        } catch (RepositoryGenerationFailedException ex) {
             throw new MojoFailureException(
                 "Error while generating repositories: ", ex
+            );
+        }
+
+        final List<String> resourcePaths = Arrays.stream(owlFiles)
+            .map(this::generateResourcePath)
+            .collect(Collectors.toList());
+        final OntologyLoaderGenerator ontologyLoaderGenerator
+                                          = OntologyLoaderGenerator
+                .buildClassPathOntologyLoaderGenerator(
+                    ontologyOwlApi, outputDir.toPath(), resourcePaths
+                );
+        try {
+            ontologyLoaderGenerator.generateOntologyLoader();
+        } catch (OntologyLoaderGenerationFailedException ex) {
+            throw new MojoFailureException(
+                "Error while generating OntologyLoader: ", ex
             );
         }
 
@@ -198,6 +217,14 @@ public class OwlApiSimplexMojo extends AbstractMojo {
         }
 
         return ontologyPath;
+    }
+
+    private String generateResourcePath(final String source) {
+        if (source.startsWith("/")) {
+            return source;
+        } else {
+            return String.format("/%s", source);
+        }
     }
 
 }

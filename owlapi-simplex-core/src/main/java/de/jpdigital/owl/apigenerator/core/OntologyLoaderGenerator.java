@@ -53,6 +53,12 @@ public class OntologyLoaderGenerator {
      * Where should the generated classes load the OWL files from?
      */
     private final OwlFileSource fileSource;
+    
+    /**
+     * Resource paths for the OWL files to load. Only required if 
+     * {@link #fileSource} is {@link OwlFileSource#CLASS_PATH}.
+     */
+    private List<String> resourcePaths;
 
     private OntologyLoaderGenerator(
         final OntologyOwlApi ontologyOwlApi,
@@ -63,13 +69,49 @@ public class OntologyLoaderGenerator {
         this.outputDir = outputDir;
         this.fileSource = fileSource;
     }
-
-    public static OntologyLoaderGenerator buildOntologyLoaderGenerator(
+    
+    private OntologyLoaderGenerator(
         final OntologyOwlApi ontologyOwlApi,
         final Path outputDir,
-        final OwlFileSource fileSource
+        final OwlFileSource fileSource,
+        final List<String> resourcePaths
     ) {
-        if (!Files.isDirectory(outputDir)) {
+        this.ontologyOwlApi = ontologyOwlApi;
+        this.outputDir = outputDir;
+        this.fileSource = fileSource;
+        this.resourcePaths = resourcePaths;
+    }
+
+    public static OntologyLoaderGenerator buildDirectoryOntologyLoaderGenerator(
+        final OntologyOwlApi ontologyOwlApi, final Path outputDir
+    ) {
+        validateOutputDir(outputDir);
+        Objects.requireNonNull(ontologyOwlApi, "ontologyOwlApi can't be null");
+
+        return new OntologyLoaderGenerator(
+            ontologyOwlApi, outputDir, OwlFileSource.DIRECTORY
+        );
+    }
+    
+    public static OntologyLoaderGenerator buildClassPathOntologyLoaderGenerator(
+        final OntologyOwlApi ontologyOwlApi, 
+        final Path outputDir, 
+        final List<String> resourcePaths
+    ) {
+        validateOutputDir(outputDir);
+        Objects.requireNonNull(ontologyOwlApi, "ontologyOwlApi can't be null");
+        Objects.requireNonNull(resourcePaths, "resourcePaths can't be null");
+        if (resourcePaths.isEmpty()) {
+            throw new IllegalArgumentException("resourcePath can't be empty.");
+        }
+        
+        return new OntologyLoaderGenerator(
+            ontologyOwlApi, outputDir, OwlFileSource.CLASS_PATH, resourcePaths
+        );
+    }
+
+    private static  void validateOutputDir(final Path outputDir) {
+         if (!Files.isDirectory(outputDir)) {
             throw new IllegalArgumentException(
                 String.format(
                     "The provided path \"%s\" is not a directory.",
@@ -86,23 +128,15 @@ public class OntologyLoaderGenerator {
                 )
             );
         }
-
-        Objects.requireNonNull(ontologyOwlApi, "ontologyOwlApi can't be null");
-        Objects.requireNonNull(fileSource, "fileSource can't be null");
-
-        return new OntologyLoaderGenerator(
-            ontologyOwlApi, outputDir, fileSource
-        );
-
     }
-
+    
     public void generateOntologyLoader() 
         throws OntologyLoaderGenerationFailedException {
         final String license = "";
 
         final OWLOntology ontology = ontologyOwlApi.getOntology();
         final IRI ontologyIri = getOntologyIri(ontology);
-        final String packageName = Utils.generatePackageName(ontologyIri);
+        final String packageName = generatePackageName(ontologyIri);
 
         final String className = "OntologyLoader";
 
@@ -136,6 +170,7 @@ public class OntologyLoaderGenerator {
         dataModel.put("className", className);
         dataModel.put("baseClass", baseClass);
         dataModel.put("ontologyIris", ontologyIris);
+        dataModel.put("ontologySources", resourcePaths);
         
         final Path packagePath = Utils.generatePackagePath(packageName);
         
@@ -175,7 +210,16 @@ public class OntologyLoaderGenerator {
                 );
             }
         }
-
+    }
+    
+    private String generatePackageName(final IRI ontologyIri) {
+        final String packageName = Utils.generatePackageName(ontologyIri);
+        
+        if (packageName.endsWith(".")) {
+            return packageName.substring(0, packageName.length() - 1);
+        } else {
+            return packageName;
+        }
     }
 
 }
