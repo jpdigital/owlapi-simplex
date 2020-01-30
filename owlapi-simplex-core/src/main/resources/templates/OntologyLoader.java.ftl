@@ -27,7 +27,7 @@ public class ${className} extends ${baseClass}{
         final List<IRI> ontologyIris = Arrays.asList({
             <#list ontologyIris as iri>
             "${iri}"<#sep>,</#sep>
-            <#/list>
+            </#list>
         });
         for (final IRI iri : ontologyIris) {
             final boolean available = ontologies

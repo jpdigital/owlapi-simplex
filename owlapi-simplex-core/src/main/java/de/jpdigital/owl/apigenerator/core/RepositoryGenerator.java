@@ -105,13 +105,19 @@ public class RepositoryGenerator {
         return new RepositoryGenerator(ontologyOwlApi, outputDir);
     }
 
-    public void generateRepositoryClasses() {
-        ontologyOwlApi
-            .getOntology()
-            .classesInSignature(Imports.INCLUDED)
-            .forEach(this::generateRepositoryClass);
+    public void generateRepositoryClasses() 
+        throws RepositoryGenerationFailedException {
+        
+        final List<OWLClass> owlClasses = ontologyOwlApi
+        .getOntology()
+        .classesInSignature(Imports.INCLUDED)
+        .collect(Collectors.toList());
+        
+        for (final OWLClass owlClass : owlClasses) {
+            generateRepositoryClass(owlClass);
+        }
     }
-
+    
     /**
      * Generates a repository class for the provided OWL class.
      *
@@ -119,7 +125,8 @@ public class RepositoryGenerator {
      *
      * @return The fully qualified name of the generated Java class.
      */
-    private String generateRepositoryClass(final OWLClass owlClass) {
+    private void generateRepositoryClass(final OWLClass owlClass)
+        throws RepositoryGenerationFailedException {
         LOGGER.info(
             "OWL class {} is in the domain of the following data properties:",
             owlClass.getIRI().toString()
@@ -169,10 +176,8 @@ public class RepositoryGenerator {
             Files.createDirectories(packageDir);
             Files.write(classFile, result.getBytes(StandardCharsets.UTF_8));
         } catch (IOException ex) {
-            throw new UnexpectedErrorException(ex);
+            throw new RepositoryGenerationFailedException(ex);
         }
-
-        return String.format("%s.%s", packageName, className);
     }
 
 //    private String dataPropertyRangeTypes(final OWLDataProperty dataProperty) {

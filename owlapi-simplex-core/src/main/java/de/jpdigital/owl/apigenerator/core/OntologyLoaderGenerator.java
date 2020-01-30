@@ -96,7 +96,8 @@ public class OntologyLoaderGenerator {
 
     }
 
-    public void generateOntologyLoader() {
+    public void generateOntologyLoader() 
+        throws OntologyLoaderGenerationFailedException {
         final String license = "";
 
         final OWLOntology ontology = ontologyOwlApi.getOntology();
@@ -153,7 +154,7 @@ public class OntologyLoaderGenerator {
             Files.createDirectories(packageDir);
             Files.write(classFile, result.getBytes(StandardCharsets.UTF_8));
         } catch(IOException ex) {
-            throw new UnexpectedErrorException(ex);
+            throw new OntologyLoaderGenerationFailedException(ex);
         }
     }
 

@@ -20,6 +20,7 @@ import de.jpdigital.owl.apigenerator.core.IriConstantsGenerationFailedExpection;
 import de.jpdigital.owl.apigenerator.core.IriConstantsGenerator;
 import de.jpdigital.owl.apigenerator.core.OntologyLoadingException;
 import de.jpdigital.owl.apigenerator.core.OntologyOwlApi;
+import de.jpdigital.owl.apigenerator.core.RepositoryGenerationFailedException;
 import de.jpdigital.owl.apigenerator.core.RepositoryGenerator;
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Resource;
@@ -136,13 +137,19 @@ public class OwlApiSimplexMojo extends AbstractMojo {
             iriConstantsGenerator.generateAnnotationIriConstants();
         } catch (IriConstantsGenerationFailedExpection ex) {
             throw new MojoFailureException(
-                "Error while generating IRI constants.", ex
+                "Error while generating IRI constants: ", ex
             );
         }
         
         final RepositoryGenerator repositoryGenerator = RepositoryGenerator
             .buildRepositoryGenerator(ontologyOwlApi, outputDir.toPath());
-        repositoryGenerator.generateRepositoryClasses();
+        try {
+            repositoryGenerator.generateRepositoryClasses();
+        } catch(RepositoryGenerationFailedException ex) {
+            throw new MojoFailureException(
+                "Error while generating repositories: ", ex
+            );
+        }
 
         project.addCompileSourceRoot(outputDir.getAbsolutePath());
     }

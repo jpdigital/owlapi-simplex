@@ -18,7 +18,12 @@ package de.jpdigital.owl.apigenerator.cli;
 
 import de.jpdigital.owl.apigenerator.core.IriConstantsGenerationFailedExpection;
 import de.jpdigital.owl.apigenerator.core.IriConstantsGenerator;
+import de.jpdigital.owl.apigenerator.core.OntologyLoaderGenerationFailedException;
+import de.jpdigital.owl.apigenerator.core.OntologyLoaderGenerator;
 import de.jpdigital.owl.apigenerator.core.OntologyOwlApi;
+import de.jpdigital.owl.apigenerator.core.OwlFileSource;
+import de.jpdigital.owl.apigenerator.core.RepositoryGenerationFailedException;
+import de.jpdigital.owl.apigenerator.core.RepositoryGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import picocli.CommandLine;
@@ -93,7 +98,6 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
         final IriConstantsGenerator iriConstantsGenerator
                                         = IriConstantsGenerator
                 .buildIriConstantsGenerator(ontologyOwlApi, outputDirPath);
-
         try {
             iriConstantsGenerator.generateClassIriConstants();
             iriConstantsGenerator.generateObjectPropertyIriConstants();
@@ -101,8 +105,27 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
             iriConstantsGenerator.generateIndividualPropertyIriConstants();
             iriConstantsGenerator.generateAnnotationIriConstants();
         } catch (IriConstantsGenerationFailedExpection ex) {
-            LOGGER.error("Error while generating IRI constants.", ex);
+            LOGGER.error("Error while generating IRI constants: ", ex);
             return -1;
+        }
+
+        final RepositoryGenerator repositoryGenerator = RepositoryGenerator
+            .buildRepositoryGenerator(ontologyOwlApi, outputDirPath);
+        try {
+            repositoryGenerator.generateRepositoryClasses();
+        } catch (RepositoryGenerationFailedException ex) {
+            LOGGER.error("Failed to generate repositories: ", ex);
+        }
+
+        final OntologyLoaderGenerator ontologyLoaderGenerator
+                                      = OntologyLoaderGenerator
+                .buildOntologyLoaderGenerator(
+                    ontologyOwlApi, outputDirPath, OwlFileSource.DIRECTORY
+                );
+        try {
+            ontologyLoaderGenerator.generateOntologyLoader();
+        } catch(OntologyLoaderGenerationFailedException ex) {
+            LOGGER.error("Failed to generate OntologyLoaders: ", ex);
         }
 
         return 0;
