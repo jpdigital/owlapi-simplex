@@ -17,7 +17,7 @@
     <packaging>pom</packaging>
 
     <name>OWLAPI Simplex</name>
-    <url>http://www.example.org</url> <!-- Change to entwicker-news.net when oneline-->
+    <url>https://jp-digital.github.io/owlapi-simplex</url>
     
     <description>
         A code generator and some utility classes to make the OWL API simpler to 

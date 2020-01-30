@@ -25,6 +25,7 @@ hs_err_pid*
 
 # Only for local testing
 test.sh
+test-foaf.sh
 
 # Netbeans config
 

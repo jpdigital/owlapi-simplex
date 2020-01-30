@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -34,12 +35,16 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static javax.swing.UIManager.*;
+
 /**
  * Generates constants for the IRIs of OWL entities in an ontology.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class IriConstantsGenerator {
+
+    private static final String CONSTANT_NAME = "constantName";
 
     /**
      * The ontology to use.
@@ -236,13 +241,13 @@ public class IriConstantsGenerator {
         dataModel.put("package", iriBundle.getPackageName());
         dataModel.put("baseIri", iriBundle.getNamespace());
         dataModel.put("className", iriBundle.getClassName());
-        dataModel.put(
-            "iris",
-            iriBundle.getIris()
-                .stream()
-                .map(iri -> generateIriConstant(iri))
-                .collect(Collectors.toList())
-        );
+        final List<Map<String, String>> constants = iriBundle
+            .getIris()
+            .stream()
+            .map(iri -> generateIriConstant(iri))
+            .collect(Collectors.toList());
+        preventDuplicateConstantNames(constants);
+        dataModel.put("iris", constants);
 
         final TemplateService templateService = TemplateService
             .getTemplateService();
@@ -267,7 +272,9 @@ public class IriConstantsGenerator {
 
     /**
      * Helper method for generating an valid Java name for an IRI.
+     *
      * @param iri The iri.
+     *
      * @return A valid Java name for the constant.
      */
     private Map<String, String> generateIriConstant(final IRI iri) {
@@ -280,18 +287,19 @@ public class IriConstantsGenerator {
             .replaceAll("(.)([\\p{Lu}])", "$1_$2")
             .toUpperCase(Locale.ROOT);
 
-        constant.put("constantName", constantName);
+        constant.put(CONSTANT_NAME, constantName);
         constant.put("value", iriString);
 
         return constant;
     }
 
     /**
-     * Helper method for ensuring that a name is camel case. 
-     * 
+     * Helper method for ensuring that a name is camel case.
+     *
      * @param name The name to check.
-     * @return The name in camel case (without two uppercase letters following 
-     * each other).
+     *
+     * @return The name in camel case (without two uppercase letters following
+     *         each other).
      */
     private String ensureCamelCase(final String name) {
 
@@ -310,7 +318,24 @@ public class IriConstantsGenerator {
         }
         builder.append(name.substring(last));
         return builder.toString();
-
+    }
+    
+    private void preventDuplicateConstantNames(
+        final List<Map<String, String>> constants
+    ) {
+        final Map<String, Integer> nameCount = new HashMap<>();
+        for (final Map<String, String> constant : constants) {
+            if (nameCount.containsKey(constant.get(CONSTANT_NAME))) {
+                final int count = nameCount.get(constant.get(CONSTANT_NAME)) + 1;
+                nameCount.put(constant.get(CONSTANT_NAME), count);
+                final String constantName = constant.get(CONSTANT_NAME);
+                constant.put(
+                    CONSTANT_NAME, String.format("%s%d", constantName, count)
+                );
+            } else {
+                nameCount.put(constant.get(CONSTANT_NAME), 1);
+            }
+        }
     }
 
 }

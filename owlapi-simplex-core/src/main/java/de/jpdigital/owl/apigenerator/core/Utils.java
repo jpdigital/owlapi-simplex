@@ -92,6 +92,7 @@ public class Utils {
 
         final String packageName = tokens
             .stream()
+            .filter(token -> !token.isEmpty())
             .map(token -> WordUtils.capitalize(token, '-'))
             .map(token -> WordUtils.uncapitalize(token))
             .map(token -> token.replace("-", ""))
