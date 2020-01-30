@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -108,10 +109,15 @@ public class RepositoryGenerator {
     public void generateRepositoryClasses() 
         throws RepositoryGenerationFailedException {
         
-        final List<OWLClass> owlClasses = ontologyOwlApi
+        final Set<OWLClass> owlClasses = ontologyOwlApi
         .getOntology()
         .classesInSignature(Imports.INCLUDED)
-        .collect(Collectors.toList());
+        .filter(
+            owlClass -> !owlClass.getIRI().toString().startsWith(
+                "http://www.w3.org/"
+            )
+        )
+        .collect(Collectors.toSet());
         
         for (final OWLClass owlClass : owlClasses) {
             generateRepositoryClass(owlClass);
