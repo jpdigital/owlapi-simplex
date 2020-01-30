@@ -16,11 +16,8 @@
  */
 package de.jpdigital.owlapisimplex;
 
-import openllet.owlapi.OpenlletReasonerFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;

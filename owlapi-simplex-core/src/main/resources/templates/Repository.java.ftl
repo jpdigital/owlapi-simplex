@@ -7,6 +7,10 @@ package ${package};
 
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
+import java.util.List;
+import java.util.stream.Stream;
+
+import de.jpdigital.owlapisimplex.OwlApiSimplexUtils;
 import de.jpdigital.owlapisimplex.Instances;
 
 import java.util.stream.Collectors;
@@ -18,16 +22,20 @@ public class ${className} {
 
     private final Instances instances;
 
+    public ${className}(final OwlApiSimplexUtils owlApiSimplexUtils) {
+        instances = owlApiSimplexUtils.buildInstances();
+    }
+
     public ${className}(final Instances instances) {
         this.instances = instances;
     }
     
-    public Stream<OWLIndividuals> instances() {
-        return instances.instances(${classIri});
+    public Stream<OWLNamedIndividual> instances() {
+        return instances.instances("${classIri}");
     }
 
-    public List<OWLIndividuals> getInstances() {
-        return instances.getInstances(${classIri});
+    public List<OWLNamedIndividual> getInstances() {
+        return instances.getInstances("${classIri}");
     }
 
     <#list dataProperties as dataProperty>

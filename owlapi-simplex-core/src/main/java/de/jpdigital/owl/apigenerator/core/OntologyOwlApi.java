@@ -39,6 +39,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -56,9 +57,14 @@ public class OntologyOwlApi {
     );
 
     /**
-     * The ontology
+     * The ontology (the last loaded one).
      */
     private final OWLOntology ontology;
+
+    /**
+     * All loaded ontologies
+     */
+    private final List<OWLOntology> loadedOntologies;
 
     /**
      * The {@link OWLOntologyManager} used to access the ontology.
@@ -73,14 +79,19 @@ public class OntologyOwlApi {
     /**
      * Creates a new {@code OntologyOwlApi} instance.
      *
-     * @param ontology        The ontology to use.
-     * @param ontologyManager The ontology manager for accessing the ontology.
-     * @param reasoner        A reasoner for the ontology.
+     * @param ontology         The ontology to use.
+     * @param loadedOntologies All loaded ontologies.
+     * @param ontologyManager  The ontology manager for accessing the ontology.
+     * @param reasoner         A reasoner for the ontology.
      */
-    public OntologyOwlApi(final OWLOntology ontology,
-                          final OWLOntologyManager ontologyManager,
-                          final OWLReasoner reasoner) {
+    public OntologyOwlApi(
+        final OWLOntology ontology,
+        final List<OWLOntology> loadedOntologies,
+        final OWLOntologyManager ontologyManager,
+        final OWLReasoner reasoner
+    ) {
         this.ontology = ontology;
+        this.loadedOntologies = loadedOntologies;
         this.ontologyManager = ontologyManager;
         this.reasoner = reasoner;
     }
@@ -109,7 +120,7 @@ public class OntologyOwlApi {
     }
 
     /**
-     *Load the provided ontologies.
+     * Load the provided ontologies.
      *
      * @param ontologyFiles The OWL files to load. The files must be in the
      *                      correct order so that imports in the OWL files can
@@ -182,13 +193,19 @@ public class OntologyOwlApi {
         final OWLReasonerFactory reasonerFactory = new OpenlletReasonerFactory();
         final OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
 
-        return new OntologyOwlApi(ontology, ontologyManager, reasoner);
+        return new OntologyOwlApi(
+            ontology, ontologies, ontologyManager, reasoner
+        );
     }
 
     public OWLOntology getOntology() {
         return ontology;
     }
 
+    public List<OWLOntology> getLoadedOntologies() {
+        return Collections.unmodifiableList(loadedOntologies);
+    }
+    
     public OWLOntologyManager getOntologyManager() {
         return ontologyManager;
     }
@@ -199,6 +216,7 @@ public class OntologyOwlApi {
 
     /**
      * Get all classes from the ontology.
+     *
      * @return A list of the OWL classes.
      */
     public List<OWLClass> getAllClasses() {
@@ -210,7 +228,7 @@ public class OntologyOwlApi {
 
     /**
      * Get all object properties from the ontology
-     * 
+     *
      * @return A list of all object properties.
      */
     public List<OWLObjectProperty> getAllObjectProperties() {
@@ -221,7 +239,7 @@ public class OntologyOwlApi {
 
     /**
      * Get all data properties from the ontology
-     * 
+     *
      * @return A list of all data properties.
      */
     public List<OWLDataProperty> getAllDataProperties() {
@@ -232,7 +250,7 @@ public class OntologyOwlApi {
 
     /**
      * Get all individuals from the ontology
-     * 
+     *
      * @return A list of all individuals.
      */
     public List<OWLNamedIndividual> getAllIndividuals() {
@@ -243,7 +261,7 @@ public class OntologyOwlApi {
 
     /**
      * Get all annotation properties from the ontology
-     * 
+     *
      * @return A list of all anootation properties.
      */
     public List<OWLAnnotationProperty> getAllAnnotationProperties() {

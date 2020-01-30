@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -58,23 +57,15 @@ public class RepositoryGenerator {
     private final OntologyOwlApi ontologyOwlApi;
 
     /**
-     * The directory in which the generated classes are stored.
+     * The directory in which the generated packages and classes are stored.
      */
     private final Path outputDir;
 
-    /**
-     * Where should the generated Repositories class load the OWL files from?
-     */
-    private final OwlFileSource fileSource;
-
     private RepositoryGenerator(
-        final OntologyOwlApi ontologyOwlApi,
-        final Path outputDir,
-        final OwlFileSource fileSource
+        final OntologyOwlApi ontologyOwlApi, final Path outputDir
     ) {
         this.ontologyOwlApi = ontologyOwlApi;
         this.outputDir = outputDir;
-        this.fileSource = fileSource;
     }
 
     /**
@@ -85,15 +76,11 @@ public class RepositoryGenerator {
      *
      * @param ontologyOwlApi The ontology to use.
      * @param outputDir      The output directory.
-     * @param fileSource     Where should the generated class the OWL files
-     *                       from?
      *
      * @return An {@code IriConstantsGenerator}.
      */
     public static RepositoryGenerator buildRepositoryGenerator(
-        final OntologyOwlApi ontologyOwlApi,
-        final Path outputDir,
-        final OwlFileSource fileSource
+        final OntologyOwlApi ontologyOwlApi, final Path outputDir
     ) {
         if (!Files.isDirectory(outputDir)) {
             throw new IllegalArgumentException(
@@ -115,15 +102,14 @@ public class RepositoryGenerator {
 
         Objects.requireNonNull(ontologyOwlApi, "ontologyOwlApi can't be null");
 
-        return new RepositoryGenerator(ontologyOwlApi, outputDir, fileSource);
+        return new RepositoryGenerator(ontologyOwlApi, outputDir);
     }
 
     public void generateRepositoryClasses() {
-        final Set<String> repositoryClasses = ontologyOwlApi
+        ontologyOwlApi
             .getOntology()
             .classesInSignature(Imports.INCLUDED)
-            .map(this::generateRepositoryClass)
-            .collect(Collectors.toSet());
+            .forEach(this::generateRepositoryClass);
     }
 
     /**
