@@ -6,12 +6,12 @@
     <parent>
         <groupId>de.jpdigital</groupId>
         <artifactId>owlapi-simplex</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0-SNAPSHOT</version>
     </parent>
     
     <groupId>de.jpdigital</groupId>
     <artifactId>owlapi-simplex-maven-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     
     <name>Maven plugin for OWLAPI Simplex</name>
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>de.jpdigital</groupId>
             <artifactId>owlapi-simplex-core</artifactId>
-            <version>0.1.0</version>
+            <version>0.2.0-SNAPSHOT</version>
         </dependency>
         
         <dependency>
