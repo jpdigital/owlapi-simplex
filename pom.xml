@@ -59,11 +59,11 @@
     </scm>
     
     <distributionManagement>
-        <site>
+<!--        <site>
             <id>owlapi-simplex-site</id>
             <name>Maven DDL generator plugin for Hibernate 5</name>
             <url>http://jpdigital.github.io/owlapi-simplex/</url>
-        </site>
+        </site>-->
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>

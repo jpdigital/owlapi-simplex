@@ -52,6 +52,22 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <distributionManagement>
+        <!--        <site>
+            <id>owlapi-simplex-site</id>
+            <name>Maven DDL generator plugin for Hibernate 5</name>
+            <url>http://jpdigital.github.io/owlapi-simplex/</url>
+        </site>-->
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+    
     <dependencies>
         
         <!-- Dependencies for OWL -->

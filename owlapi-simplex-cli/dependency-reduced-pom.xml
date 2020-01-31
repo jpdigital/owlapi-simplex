@@ -145,6 +145,24 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build />
+      <reporting>
+        <plugins>
+          <plugin>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.8.2</version>
+            <configuration>
+              <skip>true</skip>
+              <skipDeploy>true</skipDeploy>
+            </configuration>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
