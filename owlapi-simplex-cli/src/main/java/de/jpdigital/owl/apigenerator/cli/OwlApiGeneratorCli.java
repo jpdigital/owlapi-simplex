@@ -97,7 +97,7 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
         negatable = true,
         description = "Generate repostories?"
     )
-    private boolean generateRepositories = true;
+    private boolean generateRepositories;
 
     @Option(
         names = "--no-loader",
@@ -112,8 +112,7 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
      */
     @Parameters(
         index = "0",
-        description = "The output directory. The generated sources will be "
-                          + "placed here."
+        description = "The output directory. The generated sources will be placed here."
     )
     private Path outputDirPath;
 
@@ -122,10 +121,7 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
      */
     @Parameters(
         index = "1..*",
-        description = "The ontology(ies) for which the API is generated. The "
-                          + "files are loaded in the order they are provided. "
-                          + "The last ontology is used as source and must "
-                          + "import all other ontologies."
+        description = "The ontology(ies) for which the API is generated. The files are loaded in the order they are provided. The last ontology is used as source and must import all other ontologies."
     )
     private List<Path> ontologyPaths;
 
