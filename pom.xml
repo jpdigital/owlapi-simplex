@@ -320,7 +320,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <tagBase>https://svn.libreccm.org/ccm/ccm_ng-releases</tagBase>
                 </configuration>
             </plugin>
             

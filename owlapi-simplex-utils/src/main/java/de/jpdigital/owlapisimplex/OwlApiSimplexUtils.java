@@ -20,7 +20,6 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
-
 /**
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
@@ -56,9 +55,7 @@ public class OwlApiSimplexUtils {
     }
 
     public DataProperties buildDataProperties() {
-        return DataProperties.buildDataProperties(
-            ontology, ontologyManager, reasoner
-        );
+        return DataProperties.buildDataProperties(ontologyManager, reasoner);
     }
 
     public Instances buildInstances() {
@@ -67,7 +64,7 @@ public class OwlApiSimplexUtils {
 
     public ObjectProperties buildObjectProperties() {
         return ObjectProperties.buildObjectProperties(
-            ontology, ontologyManager, reasoner
+            ontologyManager, reasoner
         );
     }
 

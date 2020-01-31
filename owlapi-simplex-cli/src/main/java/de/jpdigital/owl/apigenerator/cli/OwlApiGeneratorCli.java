@@ -21,7 +21,6 @@ import de.jpdigital.owl.apigenerator.core.IriConstantsGenerator;
 import de.jpdigital.owl.apigenerator.core.OntologyLoaderGenerationFailedException;
 import de.jpdigital.owl.apigenerator.core.OntologyLoaderGenerator;
 import de.jpdigital.owl.apigenerator.core.OntologyOwlApi;
-import de.jpdigital.owl.apigenerator.core.OwlFileSource;
 import de.jpdigital.owl.apigenerator.core.RepositoryGenerationFailedException;
 import de.jpdigital.owl.apigenerator.core.RepositoryGenerator;
 import org.apache.logging.log4j.LogManager;

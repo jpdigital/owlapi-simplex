@@ -19,7 +19,6 @@ package de.jpdigital.owlapisimplex;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
@@ -30,17 +29,12 @@ import java.util.stream.Stream;
 
 /**
  * An Utility class for working with OWL object properties.
- * 
+ *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class ObjectProperties {
 
     /**
-     * The ontology to use.
-     */
-    private final OWLOntology ontology;
-
-     /**
      * The ontology manager for interacting the ontology.
      */
     private final OWLOntologyManager ontologyManager;
@@ -52,40 +46,36 @@ public class ObjectProperties {
 
     /**
      * Creates a new instance.
-     * 
-     * @param ontology The ontology to use.
+     *
+     * @param ontology        The ontology to use.
      * @param ontologyManager The ontology manager.
-     * @param reasoner The reasoner.
+     * @param reasoner        The reasoner.
      */
     private ObjectProperties(
-        final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
         final OWLReasoner reasoner
     ) {
-        this.ontology = ontology;
         this.ontologyManager = ontologyManager;
         this.reasoner = reasoner;
     }
 
     /**
      * Factory method for generating new instances of {@code ObjectProperties}.
-     * 
-     @param ontology The ontology to use.
+     *
+     * @param ontology        The ontology to use.
      * @param ontologyManager The ontology manager.
-     * @param reasoner The reasoner.
-     
+     * @param reasoner        The reasoner.
+     *
      * @return A {@code DataProperties} instance.
      */
     public static ObjectProperties buildObjectProperties(
-        final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
         final OWLReasoner reasoner
     ) {
-        Objects.requireNonNull(ontology);
         Objects.requireNonNull(ontologyManager);
         Objects.requireNonNull(reasoner);
 
-        return new ObjectProperties(ontology, ontologyManager, reasoner);
+        return new ObjectProperties(ontologyManager, reasoner);
     }
 
     /**

@@ -35,7 +35,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static javax.swing.UIManager.*;
 
 /**
  * Generates constants for the IRIs of OWL entities in an ontology.

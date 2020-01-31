@@ -20,7 +20,6 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
@@ -35,11 +34,6 @@ import java.util.stream.Stream;
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class DataProperties {
-
-    /**
-     * The ontology to use.
-     */
-    private final OWLOntology ontology;
 
     /**
      * The ontology manager for interacting the ontology.
@@ -59,11 +53,9 @@ public class DataProperties {
      * @param reasoner The reasoner.
      */
     private DataProperties(
-        final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
         final OWLReasoner reasoner
     ) {
-        this.ontology = ontology;
         this.ontologyManager = ontologyManager;
         this.reasoner = reasoner;
     }
@@ -78,15 +70,13 @@ public class DataProperties {
      * @return A {@code DataProperties} instance.
      */
     public static DataProperties buildDataProperties(
-        final OWLOntology ontology,
         final OWLOntologyManager ontologyManager,
         final OWLReasoner reasoner
     ) {
-        Objects.requireNonNull(ontology);
         Objects.requireNonNull(ontologyManager);
         Objects.requireNonNull(reasoner);
 
-        return new DataProperties(ontology, ontologyManager, reasoner);
+        return new DataProperties(ontologyManager, reasoner);
     }
 
    

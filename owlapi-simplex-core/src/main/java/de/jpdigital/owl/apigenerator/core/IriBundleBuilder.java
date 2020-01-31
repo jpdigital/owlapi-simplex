@@ -63,6 +63,11 @@ class IriBundleBuilder {
      * @throws IriConstantsGenerationFailedExpection If an error occurs.
      */
     IriBundle build() throws IriConstantsGenerationFailedExpection {
+        LOGGER.debug(
+            "Building IriBundle for IRI \"{}\" and entity type \"{}\":",
+            iri.toString(),
+            owlEntityType.toString()
+        );
         
         final String namespace = iri.getNamespace();
         final String packageName = Utils.generatePackageName(iri);
@@ -71,72 +76,14 @@ class IriBundleBuilder {
             Utils.generatePackageName(iri, false)
         );
         
+        LOGGER.debug("\t namespace: {}", namespace);
+        LOGGER.debug("\t packageName: {}", packageName);
+        LOGGER.debug("\t packagePath: {}", packagePath.toString());
+        LOGGER.debug("\t className: {}", className);
+        
         return new IriBundle(namespace, packageName, packagePath, className);
     }
     
-//    /**
-//     * Helper method for generating a valid Java package name from the namespace
-//     * IRI. 
-//     * 
-//     * @return A valid package name for the namespace IRI.
-//     */
-//    private String generatePackageName() {
-//        LOGGER.info("Generating package name from IRI {}...", iri.toString());
-//        
-//        final String scheme = iri.getScheme();
-//        final String namespace;
-//        if (scheme == null || scheme.isEmpty()) {
-//            namespace = iri.getNamespace();
-//        } else {
-//            namespace = iri.getNamespace().substring(scheme.length() + 3);
-//        }
-//        
-//        final int domainIndexEnd = namespace.indexOf('/');
-//        final String domain = namespace.substring(0, domainIndexEnd);
-//        final String path;
-//        if (namespace.endsWith("#")) {
-//            path = namespace.substring(domainIndexEnd + 1,
-//                                       namespace.length() - 1);
-//        } else {
-//            path = namespace.substring(domainIndexEnd + 1);
-//        }
-//        
-//        final List<String> tokens = new ArrayList<>(
-//            Arrays.asList(domain.split("\\."))
-//        );
-//        Collections.reverse(tokens);
-//        tokens.addAll(
-//            Arrays
-//                .stream(path.split("/"))
-//                .map(token -> token.replace('.', '-'))
-//                .collect(Collectors.toList())
-//        );
-//        
-//        final String packageName = tokens
-//            .stream()
-//            .map(token -> WordUtils.capitalize(token, '-'))
-//            .map(token -> WordUtils.uncapitalize(token))
-//            .map(token -> token.replace("-", ""))
-//            .map(token -> token.replace('.', '_'))
-//            .map(token -> avoidNumericBegin(token))
-//            .collect(Collectors.joining("."));
-//        LOGGER.info(
-//            "Generated package name '{}' from IRI '{}'.", 
-//            packageName,
-//            iri.toString()
-//        );
-//        return packageName;
-//    }
-    
-//    /**
-//     * Returns the path for the package.
-//     * 
-//     * @param packageName The name of the package.
-//     * @return The path of the package.
-//     */
-//    private Path generatePackagePath(final String packageName) {
-//        return Paths.get(packageName.replace('.', '/'));
-//    }
     
     /**
      * Generates the class name for the IRI bundle.

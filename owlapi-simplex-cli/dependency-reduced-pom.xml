@@ -140,11 +140,6 @@
       <plugin>
         <artifactId>maven-surefire-report-plugin</artifactId>
         <version>3.0.0-M4</version>
-        <configuration>
-          <groups>org.libreccm.tests.categories.UnitTest</groups>
-          <testFailureIgnore>true</testFailureIgnore>
-          <trimStackTrace>false</trimStackTrace>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
@@ -176,6 +171,7 @@
             <reports>
               <report>dependencies</report>
               <report>licenses</report>
+              <report>scm</report>
             </reports>
           </reportSet>
         </reportSets>
