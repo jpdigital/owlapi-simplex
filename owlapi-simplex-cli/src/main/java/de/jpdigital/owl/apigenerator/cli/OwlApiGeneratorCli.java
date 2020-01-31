@@ -56,37 +56,42 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
     @Option(
         names = "--no-class-iris",
         negatable = true,
+        defaultValue = "true",
         description = "Generate IRI constants for classses?"
     )
-    private boolean generateIriConstantsForClasses = true;
+    private boolean generateIriConstantsForClasses;
 
     @Option(
         names = "--no-obj-props-iris",
         negatable = true,
+        defaultValue = "true",
         description = "Generate IRI constants for object properties?"
     )
-    private boolean generateIriConstantsForObjectProperties = true;
+    private boolean generateIriConstantsForObjectProperties;
 
     @Option(
         names = "--no-data-props-iris",
         negatable = true,
+        defaultValue = "true",
         description = "Generate IRI constants for data properties?"
     )
-    private boolean generateIriConstantsForDataProperties = true;
+    private boolean generateIriConstantsForDataProperties;
 
     @Option(
         names = "--no-individual-iris",
         negatable = true,
+        defaultValue = "true",
         description = "Generate IRI constants for individuals?"
     )
-    private boolean generateIriConstantsForIndividuals = true;
+    private boolean generateIriConstantsForIndividuals;
 
     @Option(
         names = "--no-annotation-props-iris",
         negatable = true,
+        defaultValue = "true",
         description = "Generate IRI constants for annotation properties?"
     )
-    private boolean generateIriConstantsForAnnotationProperties = true;
+    private boolean generateIriConstantsForAnnotationProperties;
 
     @Option(
         names = "--no-repositories",
@@ -98,9 +103,10 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
     @Option(
         names = "--no-loader",
         negatable = true,
+        defaultValue = "true",
         description = "Generate OntologyLoader?"
     )
-    private boolean generateOntologyLoader = true;
+    private boolean generateOntologyLoader;
 
     /**
      * Path for storing the generated sources.
