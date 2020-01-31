@@ -29,11 +29,15 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Base class for the builder classes.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public abstract class OwlApiSimplexUtilsBuilder {
 
+    /**
+     * The {@link OWLOntologyManager} instance to use.
+     */
     private final OWLOntologyManager ontologyManager;
 
     OwlApiSimplexUtilsBuilder() {
@@ -44,6 +48,18 @@ public abstract class OwlApiSimplexUtilsBuilder {
         return ontologyManager;
     }
 
+    /**
+     * Helper method for loading an ontology document from an
+     * {@link InputStream}.
+     *
+     * @param inputStream The {
+     *
+     * @InputStream} of the ontology document.
+     *
+     * @return An {@link OWLOntology} for the the loaded ontology.
+     *
+     * @throws OWLOntologyCreationException If the ontology could not be loaded.
+     */
     protected OWLOntology loadOntology(final InputStream inputStream)
         throws OWLOntologyCreationException {
         return ontologyManager.loadOntologyFromOntologyDocument(
@@ -54,13 +70,22 @@ public abstract class OwlApiSimplexUtilsBuilder {
         );
     }
 
+    /**
+     * Abstract method for loading ontologies. The implementor must provided an
+     * implementation for this method.
+     *
+     * @return A list of the loaded ontologies.
+     *
+     * @throws OwlApiSimplexException If an error occurs while loading the
+     *                                ontology documents.
+     */
     protected abstract List<OWLOntology> loadOntologies() throws
         OwlApiSimplexException;
 
     /**
      * Validate if all required ontologies are available.Intented to be
-     * overwritten by subclasses the the owlapi-simplex-generator. 
-     * 
+     * overwritten by subclasses the the owlapi-simplex-generator.
+     *
      * The default implemetation does nothing.
      *
      * @param ontologies The ontologies to validate.
@@ -73,6 +98,19 @@ public abstract class OwlApiSimplexUtilsBuilder {
         // Nothing
     }
 
+    /**
+     * Loads the ontologies and creates an instance of
+     * {@link OwlApiSimplexUtils} for the loaded ontologies.
+     *
+     * The last ontology document loaded is used as ontology here. Therefore
+     * this OWL document must either directly or indirectly import all other
+     * ontologies.
+     *
+     * @return A new instance of {@link OwlApiSimplexUtils}.
+     *
+     * @throws OwlApiSimplexException If an error occurs while loading the
+     *                                ontologies.
+     */
     public OwlApiSimplexUtils build() throws OwlApiSimplexException {
         final List<OWLOntology> ontologies = loadOntologies();
         validate(ontologies);

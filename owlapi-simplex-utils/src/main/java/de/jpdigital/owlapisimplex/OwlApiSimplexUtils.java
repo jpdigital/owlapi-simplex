@@ -21,15 +21,29 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
 /**
- *
+ * A helper class for owlapi-simplex-utils. 
+ * 
+ * Used to pass the necessary instances of classes from the OWL API to 
+ * other classes. Also provides factory methods for some classes provided
+ * by owlapi-simplex-utils.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class OwlApiSimplexUtils {
 
+    /**
+     * The ontology to use.
+     */
     private final OWLOntology ontology;
 
+    /**
+     * Ontology manager to use.
+     */
     private final OWLOntologyManager ontologyManager;
 
+    /**
+     * A reasoner for the ontology.
+     */
     private final OWLReasoner reasoner;
 
     OwlApiSimplexUtils(
@@ -54,14 +68,32 @@ public class OwlApiSimplexUtils {
         return reasoner;
     }
 
+    /**
+     * Builds a new instance of {@link DataProperties} using the OWL API objects
+     * passed to the {@code OwlApiSimplexUtils} instance.
+     * 
+     * @return A new instance of {@link DataProperties}.
+     */
     public DataProperties buildDataProperties() {
         return DataProperties.buildDataProperties(ontologyManager, reasoner);
     }
 
+    /**
+     * Builds a new instance of {@link Instances} using the OWL API objects
+     * passed to the {@code OwlApiSimplexUtils} instance.
+     * 
+     * @return A new instance of {@link Instances}.
+     */
     public Instances buildInstances() {
         return Instances.buildInstances(ontology, ontologyManager, reasoner);
     }
 
+    /**
+     * Builds a new instance of {@link ObjectProperties} using the OWL API objects
+     * passed to the {@code OwlApiSimplexUtils} instance.
+     * 
+     * @return A new instance of {@link ObjectProperties}.
+     */
     public ObjectProperties buildObjectProperties() {
         return ObjectProperties.buildObjectProperties(
             ontologyManager, reasoner

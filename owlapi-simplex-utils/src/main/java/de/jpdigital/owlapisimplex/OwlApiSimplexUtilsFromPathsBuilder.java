@@ -27,18 +27,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Loads the ontology document of an ontology from the file system.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class OwlApiSimplexUtilsFromPathsBuilder
     extends OwlApiSimplexUtilsBuilder {
 
+    /**
+     * The paths to the ontology documents to load. These files must be in the
+     * correct order so that the OWL API can resolve all imports correctly.
+     */
     private final List<Path> paths;
 
+    /**
+     * Creates new instance using the provided list of paths.
+     *
+     * @param paths
+     */
     public OwlApiSimplexUtilsFromPathsBuilder(final List<Path> paths) {
         this.paths = paths;
     }
 
+    /**
+     * Load the ontology documents from the file system.
+     *
+     * @return A list of the loaded ontologies.
+     *
+     * @throws OwlApiSimplexException If an error ocurrs, for example if one of
+     *                                the provided paths is not readable or not
+     *                                a file.
+     */
     @Override
     protected List<OWLOntology> loadOntologies() throws OwlApiSimplexException {
 

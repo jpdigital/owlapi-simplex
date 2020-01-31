@@ -25,12 +25,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * An implementation of {@link OwlApiSimplexUtilsBuilder} which loads the 
+ * ontology document from the class path.
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class OwlApiSimplexUtilsFromResourcesBuilder
     extends OwlApiSimplexUtilsBuilder {
 
+    /**
+     * The paths of the resources to load.
+     */
     private final List<String> resourcePaths;
 
     public OwlApiSimplexUtilsFromResourcesBuilder(
@@ -39,6 +44,14 @@ public class OwlApiSimplexUtilsFromResourcesBuilder
         this.resourcePaths = resourcePaths;
     }
 
+    /**
+     * Load the ontology documents from the class path.
+     *
+     * @return A list of the loaded ontologies.
+     *
+     * @throws OwlApiSimplexException If an error ocurrs, for example if one of
+     *                                the provided resources is not readable.
+     */
     @Override
     public List<OWLOntology> loadOntologies() throws OwlApiSimplexException {
         final List<OWLOntology> ontologies = new ArrayList<>();

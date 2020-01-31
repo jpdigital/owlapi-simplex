@@ -62,7 +62,6 @@ public class ObjectProperties {
     /**
      * Factory method for generating new instances of {@code ObjectProperties}.
      *
-     * @param ontology        The ontology to use.
      * @param ontologyManager The ontology manager.
      * @param reasoner        The reasoner.
      *

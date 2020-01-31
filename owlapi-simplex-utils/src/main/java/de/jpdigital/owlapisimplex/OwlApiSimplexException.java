@@ -18,7 +18,8 @@
 package de.jpdigital.owlapisimplex;
 
 /**
- *
+ * Generic exception used by owlapi-simplex-utils
+ * 
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class OwlApiSimplexException extends Exception {
