@@ -88,6 +88,8 @@
                     <owlFiles>
                         <param>pizza.owl</param>
                     </owlFiles>
+<!--                    <generateRepositories>false</generateRepositories>
+                    <generateOntologyLoader>false</generateOntologyLoader>-->
                 </configuration>
                 <executions>
                     <execution>

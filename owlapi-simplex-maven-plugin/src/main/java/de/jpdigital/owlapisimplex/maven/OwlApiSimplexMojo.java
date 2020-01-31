@@ -58,6 +58,27 @@ import java.util.stream.Collectors;
 )
 public class OwlApiSimplexMojo extends AbstractMojo {
 
+    @Parameter(required = false, defaultValue = "true")
+    private boolean generateIriConstantsForClasses;
+
+    @Parameter(required = false, defaultValue = "true")
+    private boolean generateIriConstantsForObjectProperties;
+
+    @Parameter(required = false, defaultValue = "true")
+    private boolean generateIriConstantsForDataProperties;
+
+    @Parameter(required = false, defaultValue = "true")
+    private boolean generateIriConstantsForIndividuals;
+
+    @Parameter(required = false, defaultValue = "true")
+    private boolean generateIriConstantsForAnnotationProperties;
+
+    @Parameter(required = false, defaultValue = "true")
+    private boolean generateRepositories;
+
+    @Parameter(required = false, defaultValue = "true")
+    private boolean generateOntologyLoader;
+
     /**
      * The OWL files to use. They must be provided in the correct order so that
      * imports in the OWL files can be resolved. The path are relative to the
@@ -133,41 +154,55 @@ public class OwlApiSimplexMojo extends AbstractMojo {
                 .buildIriConstantsGenerator(ontologyOwlApi, outputDir.toPath());
 
         try {
-            iriConstantsGenerator.generateClassIriConstants();
-            iriConstantsGenerator.generateObjectPropertyIriConstants();
-            iriConstantsGenerator.generateDataPropertyIriConstants();
-            iriConstantsGenerator.generateIndividualPropertyIriConstants();
-            iriConstantsGenerator.generateAnnotationIriConstants();
+            if (generateIriConstantsForClasses) {
+                iriConstantsGenerator.generateClassIriConstants();
+            }
+            if (generateIriConstantsForObjectProperties) {
+                iriConstantsGenerator.generateObjectPropertyIriConstants();
+            }
+            if (generateIriConstantsForDataProperties) {
+                iriConstantsGenerator.generateDataPropertyIriConstants();
+            }
+            if (generateIriConstantsForIndividuals) {
+                iriConstantsGenerator.generateIndividualPropertyIriConstants();
+            }
+            if (generateIriConstantsForAnnotationProperties) {
+                iriConstantsGenerator.generateAnnotationIriConstants();
+            }
         } catch (IriConstantsGenerationFailedExpection ex) {
             throw new MojoFailureException(
                 "Error while generating IRI constants: ", ex
             );
         }
 
-        final RepositoryGenerator repositoryGenerator = RepositoryGenerator
-            .buildRepositoryGenerator(ontologyOwlApi, outputDir.toPath());
-        try {
-            repositoryGenerator.generateRepositoryClasses();
-        } catch (RepositoryGenerationFailedException ex) {
-            throw new MojoFailureException(
-                "Error while generating repositories: ", ex
-            );
+        if (generateRepositories) {
+            final RepositoryGenerator repositoryGenerator = RepositoryGenerator
+                .buildRepositoryGenerator(ontologyOwlApi, outputDir.toPath());
+            try {
+                repositoryGenerator.generateRepositoryClasses();
+            } catch (RepositoryGenerationFailedException ex) {
+                throw new MojoFailureException(
+                    "Error while generating repositories: ", ex
+                );
+            }
         }
 
-        final List<String> resourcePaths = Arrays.stream(owlFiles)
-            .map(this::generateResourcePath)
-            .collect(Collectors.toList());
-        final OntologyLoaderGenerator ontologyLoaderGenerator
-                                          = OntologyLoaderGenerator
-                .buildClassPathOntologyLoaderGenerator(
-                    ontologyOwlApi, outputDir.toPath(), resourcePaths
+        if (generateOntologyLoader) {
+            final List<String> resourcePaths = Arrays.stream(owlFiles)
+                .map(this::generateResourcePath)
+                .collect(Collectors.toList());
+            final OntologyLoaderGenerator ontologyLoaderGenerator
+                                              = OntologyLoaderGenerator
+                    .buildClassPathOntologyLoaderGenerator(
+                        ontologyOwlApi, outputDir.toPath(), resourcePaths
+                    );
+            try {
+                ontologyLoaderGenerator.generateOntologyLoader();
+            } catch (OntologyLoaderGenerationFailedException ex) {
+                throw new MojoFailureException(
+                    "Error while generating OntologyLoader: ", ex
                 );
-        try {
-            ontologyLoaderGenerator.generateOntologyLoader();
-        } catch (OntologyLoaderGenerationFailedException ex) {
-            throw new MojoFailureException(
-                "Error while generating OntologyLoader: ", ex
-            );
+            }
         }
 
         project.addCompileSourceRoot(outputDir.getAbsolutePath());
