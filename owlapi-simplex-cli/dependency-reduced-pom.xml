@@ -3,13 +3,13 @@
   <parent>
     <artifactId>owlapi-simplex</artifactId>
     <groupId>de.jpdigital</groupId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.jpdigital</groupId>
   <artifactId>owlapi-simplex-cli</artifactId>
   <name>OWLAPI Simplex CLI</name>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <description>A CLI tool for invoking the owlapi-simplex code generators.</description>
   <url>http://www.example.com</url>
   <inceptionYear>2020</inceptionYear>
@@ -17,7 +17,7 @@
     <developer>
       <id>jensp</id>
       <name>Jens Pelzetter</name>
-      <email>jens@jp-digital.de</email>
+      <email>jens.pelzetter@googlemail.com</email>
       <url>http://www.jp-digital.de</url>
       <roles>
         <role>Developer</role>
@@ -39,7 +39,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -60,7 +59,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
         <executions>
           <execution>
             <id>sign-artifacts</id>
@@ -73,7 +71,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.0</version>
         <configuration>
           <archive>
             <manifest>
@@ -85,7 +82,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.0.1</version>
         <executions>
           <execution>
             <id>attach-javadoc-plugin</id>
@@ -101,7 +97,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.1</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -120,11 +115,9 @@
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.7.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.0.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -230,7 +223,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M3</version>
+        <version>3.0.0-M4</version>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
         </configuration>
