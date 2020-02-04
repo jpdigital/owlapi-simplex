@@ -16,6 +16,7 @@
  */
 package de.jpdigital.owl.apigenerator.core;
 
+import org.apache.commons.text.WordUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.semanticweb.owlapi.model.IRI;
@@ -106,24 +107,24 @@ public class RepositoryGenerator {
         return new RepositoryGenerator(ontologyOwlApi, outputDir);
     }
 
-    public void generateRepositoryClasses() 
+    public void generateRepositoryClasses()
         throws RepositoryGenerationFailedException {
-        
+
         final Set<OWLClass> owlClasses = ontologyOwlApi
-        .getOntology()
-        .classesInSignature(Imports.INCLUDED)
-        .filter(
-            owlClass -> !owlClass.getIRI().toString().startsWith(
-                "http://www.w3.org/"
+            .getOntology()
+            .classesInSignature(Imports.INCLUDED)
+            .filter(
+                owlClass -> !owlClass.getIRI().toString().startsWith(
+                    "http://www.w3.org/"
+                )
             )
-        )
-        .collect(Collectors.toSet());
-        
+            .collect(Collectors.toSet());
+
         for (final OWLClass owlClass : owlClasses) {
             generateRepositoryClass(owlClass);
         }
     }
-    
+
     /**
      * Generates a repository class for the provided OWL class.
      *
@@ -155,7 +156,7 @@ public class RepositoryGenerator {
             .collect(Collectors.toList());
 
         final String packageName = Utils.generatePackageName(owlClass.getIRI());
-        final String className = owlClass.getIRI().getShortForm();
+        final String className = generateClassName(owlClass.getIRI());
 
         final Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("license", "");
@@ -204,6 +205,21 @@ public class RepositoryGenerator {
             .getReasoner()
             .dataPropertyDomains(dataProperty)
             .anyMatch(classInDomain -> classInDomain.equals(owlClass));
+    }
+
+    private String generateClassName(final IRI iri) {
+        final String iriShortForm = iri.getShortForm();
+
+        final String capitalized = WordUtils.capitalize(iriShortForm, '-', '_');
+        final String replaced = capitalized
+        .replace("-", "")
+        .replace('.', '_');
+        
+        if (replaced.matches("^[0-9].*")) {
+            return String.format("_%s", replaced);
+        } else {
+            return replaced;
+        }
     }
 
 }

@@ -26,6 +26,7 @@ hs_err_pid*
 # Only for local testing
 test.sh
 test-foaf.sh
+test-weba11yauditor.sh
 
 # Netbeans config
 

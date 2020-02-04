@@ -5,6 +5,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.site.deploy.skip>true</maven.site.deploy.skip>
     </properties>
 
     <prerequisites>
@@ -59,11 +60,11 @@
     </scm>
     
     <distributionManagement>
-<!--        <site>
+        <site>
             <id>owlapi-simplex-site</id>
             <name>Maven DDL generator plugin for Hibernate 5</name>
             <url>http://jpdigital.github.io/owlapi-simplex/</url>
-        </site>-->
+        </site>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -244,6 +245,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.8.2</version>
+                    <configuration>
+                        <port>8000</port>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -321,6 +325,15 @@
                     
                 </configuration>
             </plugin>
+            
+<!--            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.8.2</version>
+                <configuration>
+                    <port>8000</port>
+                </configuration>
+            </plugin>-->
             
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

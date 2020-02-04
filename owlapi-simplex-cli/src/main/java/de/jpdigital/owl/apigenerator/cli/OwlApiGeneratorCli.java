@@ -95,6 +95,7 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
     @Option(
         names = "--no-repositories",
         negatable = true,
+        defaultValue = "true",
         description = "Generate repostories?"
     )
     private boolean generateRepositories;
@@ -146,6 +147,7 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
             ontologyPaths
         );
 
+        LOGGER.info("Generating IRI constants...");
         final IriConstantsGenerator iriConstantsGenerator
                                         = IriConstantsGenerator
                 .buildIriConstantsGenerator(ontologyOwlApi, outputDirPath);
@@ -171,6 +173,7 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
         }
 
         if (generateRepositories) {
+            LOGGER.info("Generating repositories...");
             final RepositoryGenerator repositoryGenerator = RepositoryGenerator
                 .buildRepositoryGenerator(ontologyOwlApi, outputDirPath);
             try {
@@ -181,6 +184,7 @@ public class OwlApiGeneratorCli implements Callable<Integer> {
         }
 
         if (generateOntologyLoader) {
+            LOGGER.info("Generating ontology loader...");
             final OntologyLoaderGenerator ontologyLoaderGenerator
                                               = OntologyLoaderGenerator
                     .buildDirectoryOntologyLoaderGenerator(
