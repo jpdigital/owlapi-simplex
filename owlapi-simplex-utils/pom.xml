@@ -5,12 +5,12 @@
     <parent>
         <groupId>de.jpdigital</groupId>
         <artifactId>owlapi-simplex</artifactId>
-        <version>0.1.1</version>
+        <version>0.2.0-SNAPSHOT</version>
     </parent>
 
     <groupId>de.jpdigital</groupId>
     <artifactId>owlapi-simplex-utils</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0-SNAPSHOT</version>
 
     <name>OWLAPI Simplex Utils</name>
     <url>http://maven.apache.org</url>
